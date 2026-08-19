@@ -1,11 +1,18 @@
-# Personal Sites (Quarto)
+# Personal Sites
 
-Each person gets a **Quarto website** folder here. Rename `teen-one` and `teen-two` to your names.
+Each person has a **Quarto website** folder:
+
+| Folder | Person |
+|--------|--------|
+| `jiahe-yu/` | Jiahe Yu |
+| `jiahan-yu/` | Jiahan Yu |
+
+**Rule:** Only edit your own folder.
 
 ## Structure
 
 ```
-sites/your-name/
+sites/jiahe-yu/   (or jiahan-yu/)
 ├── _quarto.yml       # Site config — title, nav, theme
 ├── index.qmd         # Home page (markdown!)
 ├── about.qmd
@@ -19,7 +26,7 @@ sites/your-name/
 
 ```bash
 # Install Quarto first: https://quarto.org/docs/download/
-cd sites/your-name
+cd sites/jiahe-yu    # or sites/jiahan-yu
 quarto preview
 ```
 
@@ -27,18 +34,12 @@ Edit any `.qmd` file → save → browser updates.
 
 ## Learn markdown first
 
-Before customizing the site, complete [docs/markdown-basics.md](../docs/markdown-basics.md).
+[docs/markdown-basics.md](../docs/markdown-basics.md)
 
 ## Deploy
 
-See [docs/quarto-setup.md](../docs/quarto-setup.md).
+[docs/quarto-setup.md](../docs/quarto-setup.md)
 
 ## Optional: raw HTML track
 
-Hand-written HTML/CSS starter (for curiosity, not the main path):
-
 [docs/optional-html-starter/](../docs/optional-html-starter/)
-
-## Choosing Quarto vs Hugo
-
-See [docs/choosing-a-site-builder.md](../docs/choosing-a-site-builder.md).

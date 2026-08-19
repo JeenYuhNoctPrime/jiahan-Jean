@@ -66,11 +66,11 @@ Quarto creates/updates a `gh-pages` branch. Enable Pages in repo Settings → Pa
 
 ### Option 2 — GitHub Action (family repo)
 
-For multiple sites in one repo, a parent can set up Actions later. Ask AI: *"Create a GitHub Action that runs quarto render on sites/alex/ and deploys to Pages."*
+For multiple sites in one repo, a parent can set up Actions later. Ask AI: *"Create a GitHub Action that runs quarto render on sites/jiahe-yu/ and sites/jiahan-yu/ and deploys to Pages."*
 
 ### Option 3 — Personal repo (Model B/C)
 
-Kid owns `alex.github.io`. Same `quarto publish gh-pages` from their repo root.
+Kid owns `username.github.io`. Same `quarto publish gh-pages` from their repo root.
 
 ---
 

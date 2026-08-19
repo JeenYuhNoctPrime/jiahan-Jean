@@ -1,9 +1,9 @@
 ---
-title: "Teen Two"
+title: "Jiahan Yu"
 subtitle: "Summer 2026 · AI Learning Project"
 ---
 
-## Hey, I'm Teen Two
+## Hey, I'm Jiahan Yu
 
 My corner of the internet — written in **markdown**, built with **Quarto**.
 

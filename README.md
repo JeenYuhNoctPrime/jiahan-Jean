@@ -33,11 +33,11 @@ Each person gets a folder under `sites/`:
 
 ```
 sites/
-├── teen-one/    ← rename to your name
+├── jiahe-yu/    ← Jiahe's site
 │   ├── _quarto.yml
 │   ├── index.qmd
 │   └── journal/*.qmd
-└── teen-two/
+└── jiahan-yu/   ← Jiahan's site
 ```
 
 You write `.qmd` files (markdown + a small header). Run `quarto preview` — you have a website.
@@ -84,7 +84,7 @@ git clone https://github.com/Zhenglei-BCS/family-ai-summer-2026.git
 cd family-ai-summer-2026
 
 # Install Quarto: https://quarto.org/docs/download/
-cd sites/teen-one   # rename to your name first
+cd sites/jiahe-yu   # or sites/jiahan-yu
 quarto preview
 ```
 

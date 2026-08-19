@@ -10,6 +10,6 @@ Hand-coded HTML/CSS sites from the original repo layout. **Not the main learning
 
 ## How to open
 
-Double-click `teen-one/index.html` or `teen-two/index.html` in a browser.
+Double-click `jiahe-yu/index.html` or `jiahan-yu/index.html` in a browser.
 
 These folders are **not** connected to Quarto — standalone static HTML.

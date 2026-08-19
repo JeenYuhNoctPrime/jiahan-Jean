@@ -3,7 +3,7 @@ project:
   output-dir: _site
 
 website:
-  title: "Teen One"
+  title: "Jiahan Yu"
   description: "Summer 2026 journal and learning log"
   navbar:
     left:
@@ -19,7 +19,6 @@ website:
 
 format:
   html:
-    theme: darkly
+    theme: journal
     css: styles.css
     toc: true
-    code-fold: true

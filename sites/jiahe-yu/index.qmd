@@ -1,9 +1,9 @@
 ---
-title: "Teen One"
+title: "Jiahe Yu"
 subtitle: "Summer 2026 · AI Learning Project"
 ---
 
-## Hi, I'm Teen One
+## Hi, I'm Jiahe Yu
 
 This is my personal site — built from **markdown** files, not hand-written HTML.
 

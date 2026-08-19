@@ -1,3 +1,3 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Teen Two site ready.");
+  console.log("Jiahan Yu site ready.");
 });

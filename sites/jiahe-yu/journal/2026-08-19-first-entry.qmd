@@ -15,7 +15,7 @@ Cloned the family repo and opened my Quarto site with `quarto preview`.
 
 ## Tomorrow
 
-Rename `sites/teen-one` to `sites/my-name` and pick a Quarto theme I like.
+Pick a Quarto theme in `_quarto.yml` that feels like me.
 
 ## Markdown practice
 

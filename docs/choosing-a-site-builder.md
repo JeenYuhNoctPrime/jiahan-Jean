@@ -82,8 +82,8 @@ Three workable models:
 ```
 family-ai-summer-2026/
 └── sites/
-    ├── alex/     ← Alex's Quarto site
-    └── sam/      ← Sam's Quarto site
+    ├── jiahe-yu/     ← Jiahe's Quarto site
+    └── jiahan-yu/    ← Jiahan's Quarto site
 ```
 
 - Everyone collaborates in one repo
@@ -93,9 +93,9 @@ family-ai-summer-2026/
 ### Model B — Fork the template (good independence)
 
 1. Parent maintains `family-ai-summer-2026` as template
-2. Each kid: **Use this template** → creates `alex-site`, `sam-site` on their account
+2. Each kid: **Use this template** → creates `jiahe-site`, `jiahan-site` on their account
 3. They own their repo, learn full git workflow
-4. Deploy to `alex.github.io` via GitHub Pages
+4. Deploy to `jiahe.github.io` via GitHub Pages
 
 ### Model C — Personal site repo (most "real world")
 
