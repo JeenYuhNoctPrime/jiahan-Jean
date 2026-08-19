@@ -2,10 +2,10 @@
 
 Each person has a **Quarto website** folder:
 
-| Folder | Person |
-|--------|--------|
-| `jiahe-yu/` | Jiahe Yu |
-| `jiahan-yu/` | Jiahan Yu |
+| Folder | Person | Age | Track |
+|--------|--------|-----|-------|
+| `jiahe-yu/` | Jiahe Yu | 16 | Quarto → optional **Hugo** + portfolio features |
+| `jiahan-yu/` | Jiahan Yu | 14 | Quarto + markdown focus |
 
 **Rule:** Only edit your own folder.
 

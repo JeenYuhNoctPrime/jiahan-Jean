@@ -1,6 +1,6 @@
 # Family AI Summer 2026
 
-A summer learning project for two teens (14 & 16) to explore what AI can do — by **building real things**, not just chatting.
+A summer learning project for **Jiahe Yu (16)** and **Jiahan Yu (14)** to explore what AI can do — by **building real things**, not just chatting.
 
 ## What you'll learn
 
@@ -17,7 +17,7 @@ Week 1–2: Markdown writing
     ↓
 Week 2–3: Quarto site + journal
     ↓
-Week 4+:  Git collaboration, deploy, optional Hugo/deeper topics
+Week 4+:  Git collaboration, deploy, optional Hugo for Jiahe (16)
 ```
 
 | Step | Guide |
@@ -33,11 +33,11 @@ Each person gets a folder under `sites/`:
 
 ```
 sites/
-├── jiahe-yu/    ← Jiahe's site
+├── jiahe-yu/    ← Jiahe (16) — Quarto now; Hugo optional in week 5+
 │   ├── _quarto.yml
 │   ├── index.qmd
 │   └── journal/*.qmd
-└── jiahan-yu/   ← Jiahan's site
+└── jiahan-yu/   ← Jiahan (14)
 ```
 
 You write `.qmd` files (markdown + a small header). Run `quarto preview` — you have a website.

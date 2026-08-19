@@ -1,6 +1,6 @@
 ---
 title: "Jiahan Yu"
-subtitle: "Summer 2026 · AI Learning Project"
+subtitle: "14 · Summer 2026 · AI Learning Project"
 ---
 
 ## Hey, I'm Jiahan Yu

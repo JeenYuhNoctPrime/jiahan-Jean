@@ -78,10 +78,10 @@ Flexible plan — ~3–5 hours per week. Adjust pace to your schedule.
 
 **Goals:** Pick one feature from [PROJECT-IDEAS.md](PROJECT-IDEAS.md) and ship it.
 
-Suggestions by age/interests:
+Suggestions by person:
 
-- **14:** flashcard generator, text adventure chapter, photo gallery
-- **16:** hobby dashboard, portfolio section, automation script
+- **Jiahan (14):** flashcard generator, text adventure chapter, photo gallery
+- **Jiahe (16):** hobby dashboard, portfolio section, automation script — or start the **Hugo** optional track
 
 | Day | Activity |
 |-----|----------|

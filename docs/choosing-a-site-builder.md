@@ -2,7 +2,7 @@
 
 You write **markdown**. A **static site generator** turns your files into a website. You don't hand-write HTML for every page.
 
-This doc helps pick the right tool for ages 14 and 16.
+This doc helps pick the right tool for **Jiahan (14)** and **Jiahe (16)**.
 
 ---
 
@@ -11,7 +11,7 @@ This doc helps pick the right tool for ages 14 and 16.
 | Person | Suggested tool | Why |
 |--------|----------------|-----|
 | **Both kids (start here)** | **Quarto** | Markdown-native, one config file, great preview, gentle learning curve |
-| **16yo who wants "real blog engineering"** | **Hugo** (after Quarto) | Industry standard, huge themes, faster at scale |
+| **Jiahe (16) — optional "blog engineering"** | **Hugo** (after Quarto) | Industry standard, huge themes, portfolio-ready |
 | **Parent / optional deep dive** | Raw HTML starter in `docs/optional-html-starter/` | See how the web works under the hood |
 
 **Our repo uses Quarto as the default path.**
@@ -82,8 +82,8 @@ Three workable models:
 ```
 family-ai-summer-2026/
 └── sites/
-    ├── jiahe-yu/     ← Jiahe's Quarto site
-    └── jiahan-yu/    ← Jiahan's Quarto site
+    ├── jiahe-yu/     ← Jiahe (16)
+    └── jiahan-yu/    ← Jiahan (14)
 ```
 
 - Everyone collaborates in one repo
@@ -101,7 +101,7 @@ family-ai-summer-2026/
 
 Each kid creates `username.github.io` — standard pattern for portfolios.
 
-Quarto or Hugo lives at repo root. Best for 16yo ready to show colleges/employers.
+Quarto or Hugo lives at repo root. Best for **Jiahe (16)** when ready to show colleges/employers.
 
 **Suggestion:** Start with **Model A** for weeks 1–4, migrate to **Model B or C** when comfortable.
 
