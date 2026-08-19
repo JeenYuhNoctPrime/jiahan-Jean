@@ -24,3 +24,9 @@ build/
 
 # Personal drafts (optional — remove if you want everything in git)
 **/private/
+
+# Quarto build output
+_site/
+.quarto/
+**/site_libs/
+_freeze/

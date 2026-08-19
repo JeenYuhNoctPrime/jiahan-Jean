@@ -1,0 +1,20 @@
+---
+title: "About"
+---
+
+## About me
+
+Edit this page with your real story.
+
+Ideas to include:
+
+- What grade you're going into
+- Hobbies and things you're curious about
+- What you hope to learn this summer
+- One thing AI can't do better than you (yet)
+
+## How this site works
+
+Every page is a `.qmd` file — markdown with a small config block at the top. Quarto turns them into this website when I run `quarto preview`.
+
+That means I focus on **writing**, not wrestling with HTML tags.

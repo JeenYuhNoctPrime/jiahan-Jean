@@ -4,55 +4,55 @@ Flexible plan — ~3–5 hours per week. Adjust pace to your schedule.
 
 ---
 
-## Week 1 — Setup & first win
+## Week 1 — Markdown & setup
 
-**Goals:** Accounts ready, first successful AI conversation, repo cloned.
+**Goals:** GitHub/Cursor ready, understand markdown, first journal entry.
 
 | Day | Activity |
 |-----|----------|
-| 1 | Install Cursor. Clone this repo. Explore the folder structure. |
-| 2 | Read [docs/ai-tools/cursor.md](docs/ai-tools/cursor.md). Ask Cursor: *"Explain this README in simple terms."* |
-| 3 | Rename `sites/teen-one` and `sites/teen-two` to your names. |
-| 4 | Open your `index.html` in a browser. Change one heading by hand. |
-| 5 | Ask Cursor: *"Help me change the color scheme to [your favorite colors]."* Commit with git. |
+| 1 | Install Cursor + clone repo. Read [docs/markdown-basics.md](docs/markdown-basics.md) cheat sheet. |
+| 2 | Complete **Exercise 1** (hello journal) in a new `.qmd` file under `sites/your-name/journal/`. |
+| 3 | Install [Quarto](https://quarto.org/docs/download/). Run `quarto preview` in your site folder. |
+| 4 | Read [docs/ai-tools/cursor.md](docs/ai-tools/cursor.md). Ask: *"Review my markdown for mistakes."* |
+| 5 | **Exercise 2–3** (links, table). First git commit. |
 
-**Deliverable:** One personalized line on your homepage + one git commit.
+**Deliverable:** One journal `.qmd` file + preview running locally.
 
-**Parent checkpoint:** Can they explain what a "prompt" is?
+**Parent checkpoint:** Can they write `# heading`, `**bold**`, and a bullet list from memory?
 
 ---
 
-## Week 2 — Site skeleton
+## Week 2 — Quarto site & journal habit
 
-**Goals:** Understand HTML structure, add pages, use AI for layout ideas.
+**Goals:** Customize site config, write 3 journal entries, understand front matter.
 
 | Day | Activity |
 |-----|----------|
-| 1 | Add an About page linked from the nav. |
-| 2 | Add a Journal page listing your markdown entries. |
-| 3 | Write your first journal entry in `journal/`. |
-| 4 | Style the nav bar — try flexbox with AI help. |
-| 5 | Compare: same task in Cursor vs. typing HTML yourself. Which felt faster? |
+| 1 | Edit `_quarto.yml` — change title and try a new `theme:`. |
+| 2 | Personalize `index.qmd` and `about.qmd`. |
+| 3 | Write 2 more journal entries using the template in markdown-basics. |
+| 4 | Add an image to one entry (local file in `images/` or royalty-free URL). |
+| 5 | Ask Cursor: *"Explain what _quarto.yml controls vs what my .qmd files control."* |
 
-**Deliverable:** 3-page site (Home, About, Journal) with 1 journal entry.
+**Deliverable:** 3 journal entries visible on the Journal page.
 
-**Prompt practice:** Use templates from [prompts/starter-prompts.md](prompts/starter-prompts.md).
+**Prompt practice:** [prompts/starter-prompts.md](prompts/starter-prompts.md)
 
 ---
 
 ## Week 3 — Make it yours
 
-**Goals:** CSS confidence, images, responsive design basics.
+**Goals:** Custom styling, optional CSS, peer review.
 
 | Day | Activity |
 |-----|----------|
-| 1 | Add a profile photo or avatar (use royalty-free images or your own). |
-| 2 | Make the site look good on phone (viewport + media queries). |
-| 3 | Add a "Projects" or "Hobbies" section. |
-| 4 | Dark mode toggle (optional stretch — great AI exercise). |
-| 5 | Peer review: swap laptops, give each other one suggestion. |
+| 1 | Try 3 Quarto themes — pick one and explain why in a journal entry. |
+| 2 | Edit `styles.css` with AI help (small change — font size, link color). |
+| 3 | Add a "Projects" or "Hobbies" section to `index.qmd`. |
+| 4 | Optional: peek at [docs/optional-html-starter/](docs/optional-html-starter/) — compare HTML vs your rendered `_site/`. |
+| 5 | Peer review: swap laptops, suggest one improvement each. |
 
-**Deliverable:** Site you're not embarrassed to show a friend.
+**Deliverable:** Site that reflects their personality + journal entry comparing markdown vs HTML.
 
 ---
 
@@ -121,8 +121,8 @@ Suggestions by age/interests:
 
 | Day | Activity |
 |-----|----------|
-| 1 | Read [docs/deploying-github-pages.md](docs/deploying-github-pages.md) |
-| 2 | Enable Pages for your site folder |
+| 1 | Read [docs/quarto-setup.md](docs/quarto-setup.md) |
+| 2 | Run `quarto publish gh-pages` or set up GitHub Action with AI help |
 | 3 | Fix anything broken in production (paths, images) |
 | 4 | Share the URL with one person outside the family |
 | 5 | Add a `robots.txt` and think about privacy (what not to publish) |

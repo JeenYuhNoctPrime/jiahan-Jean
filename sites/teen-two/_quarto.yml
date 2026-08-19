@@ -1,0 +1,24 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Teen Two"
+  description: "Summer 2026 journal and learning log"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - href: journal/index.qmd
+        text: Journal
+    right:
+      - icon: github
+        href: https://github.com/Zhenglei-BCS/family-ai-summer-2026
+
+format:
+  html:
+    theme: journal
+    css: styles.css
+    toc: true

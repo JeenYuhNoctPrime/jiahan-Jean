@@ -4,90 +4,91 @@ A summer learning project for two teens (14 & 16) to explore what AI can do — 
 
 ## What you'll learn
 
-- How to use AI coding assistants: **Cursor**, **GitHub Copilot**, and **Claude Code**
-- How to write good prompts (ask clearly, iterate, verify)
-- Git & GitHub basics (commit, branch, pull request)
-- How to publish a personal website on **GitHub Pages**
-- When to trust AI — and when to double-check
+1. **Markdown** — write journals, READMEs, and site content in plain text
+2. **Quarto** — turn markdown into a personal website (recommended)
+3. **AI tools** — Cursor, GitHub Copilot, Claude Code
+4. **Git & GitHub** — commit, branch, pull request, publish
+5. **AI literacy** — when to trust output, when to verify
 
-## Flagship project: Personal website + journal
+## Learning path (recommended)
 
-Each of you gets your own folder under `sites/` with a starter site you can customize:
+```
+Week 1–2: Markdown writing
+    ↓
+Week 2–3: Quarto site + journal
+    ↓
+Week 4+:  Git collaboration, deploy, optional Hugo/deeper topics
+```
+
+| Step | Guide |
+|------|-------|
+| 1. Write markdown | [docs/markdown-basics.md](docs/markdown-basics.md) |
+| 2. Pick a site builder | [docs/choosing-a-site-builder.md](docs/choosing-a-site-builder.md) |
+| 3. Build with Quarto | [docs/quarto-setup.md](docs/quarto-setup.md) |
+| 4. Publish | [docs/quarto-setup.md](docs/quarto-setup.md#publish-to-github-pages) |
+
+## Flagship project: Journal site (markdown → Quarto)
+
+Each person gets a folder under `sites/`:
 
 ```
 sites/
 ├── teen-one/    ← rename to your name
-└── teen-two/    ← rename to your name
+│   ├── _quarto.yml
+│   ├── index.qmd
+│   └── journal/*.qmd
+└── teen-two/
 ```
 
-You'll build a site that includes:
+You write `.qmd` files (markdown + a small header). Run `quarto preview` — you have a website.
 
-- A home page about you
-- A journal (markdown files that become web pages)
-- Room to add projects, photos, or whatever you want
+**Why not hand-written HTML?** Markdown lets them focus on writing and thinking. Quarto handles layout. HTML/CSS is optional later ([docs/optional-html-starter/](docs/optional-html-starter/)).
 
-See [docs/deploying-github-pages.md](docs/deploying-github-pages.md) when you're ready to go live.
+## Per-account options
+
+If each kid has their own GitHub account:
+
+- **Start:** everyone edits their folder in this family repo
+- **Later:** fork to `theirname-site` or create `username.github.io`
+
+Details in [docs/choosing-a-site-builder.md](docs/choosing-a-site-builder.md).
 
 ## Other project ideas
 
-Your personal site can grow into anything. We also collected **10+ alternate project ideas** ranked by difficulty in [PROJECT-IDEAS.md](PROJECT-IDEAS.md) — study tools, games, recipe books, automation, and more.
+See [PROJECT-IDEAS.md](PROJECT-IDEAS.md) — study tools, games, automation, and more.
 
-## 8-week plan (flexible)
+## 8-week plan
 
-Follow [CURRICULUM.md](CURRICULUM.md) week by week, or skip around. Summer is for exploring.
+[CURRICULUM.md](CURRICULUM.md) — updated for markdown-first learning.
 
-| Week | Theme |
+## AI tools
+
+| Tool | Guide |
 |------|-------|
-| 1 | Setup + first prompt |
-| 2 | Personal site skeleton |
-| 3 | Journal + styling |
-| 4 | Git collaboration |
-| 5 | Add a feature with AI |
-| 6 | Try a second AI tool |
-| 7 | Deploy to the internet |
-| 8 | Demo day + retrospective |
+| Cursor | [docs/ai-tools/cursor.md](docs/ai-tools/cursor.md) |
+| GitHub Copilot | [docs/ai-tools/github-copilot.md](docs/ai-tools/github-copilot.md) |
+| Claude Code | [docs/ai-tools/claude-code.md](docs/ai-tools/claude-code.md) |
 
-## AI tools guide
+## Ground rules
 
-| Tool | Best for | Guide |
-|------|----------|-------|
-| Cursor | Full projects, editing many files, asking questions about code | [docs/ai-tools/cursor.md](docs/ai-tools/cursor.md) |
-| GitHub Copilot | Inline suggestions while you type in VS Code | [docs/ai-tools/github-copilot.md](docs/ai-tools/github-copilot.md) |
-| Claude Code | Terminal-based agent, good for scripting & automation | [docs/ai-tools/claude-code.md](docs/ai-tools/claude-code.md) |
-
-## Ground rules (family edition)
-
-1. **AI helps you learn — it doesn't replace thinking.** Always read what it generates.
-2. **No secrets in prompts or commits.** No passwords, API keys, or private info.
-3. **Credit your tools.** It's fine to say "I built this with Cursor's help."
-4. **One branch per person** when working on separate sites (`sites/your-name`).
-5. **Have fun.** Break things. That's how you learn.
+1. **AI helps you learn — it doesn't replace thinking.**
+2. **No secrets in prompts or commits.**
+3. **You write the journal; AI polishes — not invents.**
+4. **One folder per person** under `sites/`.
+5. **Have fun.**
 
 ## Quick start
 
 ```bash
-# Clone (after the repo is on GitHub)
 git clone https://github.com/Zhenglei-BCS/family-ai-summer-2026.git
 cd family-ai-summer-2026
 
-# Rename your site folder
-mv sites/teen-one sites/your-name
-
-# Open in Cursor and ask:
-# "Help me customize index.html — I want a dark theme and a section about my hobbies."
+# Install Quarto: https://quarto.org/docs/download/
+cd sites/teen-one   # rename to your name first
+quarto preview
 ```
 
-## Repo structure
-
-```
-family-ai-summer-2026/
-├── README.md              ← you are here
-├── PROJECT-IDEAS.md       ← project menu
-├── CURRICULUM.md          ← week-by-week plan
-├── docs/                  ← guides
-├── prompts/               ← copy-paste prompt templates
-└── sites/                 ← your personal websites
-```
+Open [docs/markdown-basics.md](docs/markdown-basics.md) and do Exercise 1.
 
 ---
 
