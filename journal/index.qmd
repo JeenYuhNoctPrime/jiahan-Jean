@@ -1,0 +1,15 @@
+---
+title: "Journal"
+listing:
+  contents:
+    - "2026-*.qmd"
+  sort: "date desc"
+  type: default
+  categories: false
+  feed: true
+page-layout: full
+---
+
+# Journal
+
+Document the summer — wins, bugs, and surprises.
