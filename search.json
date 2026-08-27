@@ -1,0 +1,191 @@
+[
+  {
+    "objectID": "journal/index.html",
+    "href": "journal/index.html",
+    "title": "Journal",
+    "section": "",
+    "text": "Journal\nDocument the summer — wins, bugs, and surprises.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMy Learning Journey This Week\n\n\nWhat I learned about Python, Markdown, Blender and GitHub\n\n\n\n\n\nAug 26, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nPython, Data, and a Donut Plot\n\n\nUsing Python and Matplotlib to turn summer activities into a donut chart\n\n\n\n\n\nAug 26, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nSignal in the Summer\n\n\nAn original song about learning, making, and finding your own signal\n\n\n\n\n\nAug 26, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDay zero — let’s go\n\n\nStarting the summer AI project\n\n\n\n\n\nAug 19, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "journal/2026-08-26-python-donut-plot.html",
+    "href": "journal/2026-08-26-python-donut-plot.html",
+    "title": "Python, Data, and a Donut Plot",
+    "section": "",
+    "text": "I connected Python to my Quarto journal and used it to generate a donut plot. I made up a small set of summer activity data so I could see how a list of numbers becomes a visual story.\n\nimport matplotlib.pyplot as plt\n\nactivities = [\"Coding\", \"Reading\", \"Design\", \"Breaks\"]\nhours = [8, 5, 3, 4]\ncolors = [\"#2a6f97\", \"#61a5c2\", \"#f4a261\", \"#e9c46a\"]\n\nfig, ax = plt.subplots()\nax.pie(\n    hours,\n    labels=activities,\n    colors=colors,\n    autopct=\"%1.0f%%\",\n    startangle=90,\n    wedgeprops={\"width\": 0.38, \"edgecolor\": \"white\"},\n)\nax.set_title(\"My Summer Project Time\")\nax.set_aspect(\"equal\")\nplt.show()\n\n\n\n\n\n\n\nFigure 1: How I divided my summer project time"
+  },
+  {
+    "objectID": "journal/2026-08-26-python-donut-plot.html#what-i-did",
+    "href": "journal/2026-08-26-python-donut-plot.html#what-i-did",
+    "title": "Python, Data, and a Donut Plot",
+    "section": "",
+    "text": "I connected Python to my Quarto journal and used it to generate a donut plot. I made up a small set of summer activity data so I could see how a list of numbers becomes a visual story.\n\nimport matplotlib.pyplot as plt\n\nactivities = [\"Coding\", \"Reading\", \"Design\", \"Breaks\"]\nhours = [8, 5, 3, 4]\ncolors = [\"#2a6f97\", \"#61a5c2\", \"#f4a261\", \"#e9c46a\"]\n\nfig, ax = plt.subplots()\nax.pie(\n    hours,\n    labels=activities,\n    colors=colors,\n    autopct=\"%1.0f%%\",\n    startangle=90,\n    wedgeprops={\"width\": 0.38, \"edgecolor\": \"white\"},\n)\nax.set_title(\"My Summer Project Time\")\nax.set_aspect(\"equal\")\nplt.show()\n\n\n\n\n\n\n\nFigure 1: How I divided my summer project time"
+  },
+  {
+    "objectID": "journal/2026-08-26-python-donut-plot.html#what-i-learned",
+    "href": "journal/2026-08-26-python-donut-plot.html#what-i-learned",
+    "title": "Python, Data, and a Donut Plot",
+    "section": "What I learned",
+    "text": "What I learned\nThe activities list supplies the labels, and the hours list supplies the sizes. Matplotlib matches the items by position: the first label goes with the first number, and so on.\nThe donut shape comes from wedgeprops. Setting width below 1 leaves a hole in the middle of the pie. autopct adds percentages automatically, which makes the chart easier to read than a list of numbers."
+  },
+  {
+    "objectID": "journal/2026-08-26-python-donut-plot.html#why-this-connects",
+    "href": "journal/2026-08-26-python-donut-plot.html#why-this-connects",
+    "title": "Python, Data, and a Donut Plot",
+    "section": "Why this connects",
+    "text": "Why this connects\nPython is not only for calculations. It can also turn information into something I can inspect quickly. The chart makes it obvious that coding takes the biggest share of this example, while still showing how the other activities fit around it."
+  },
+  {
+    "objectID": "journal/2026-08-26-python-donut-plot.html#next",
+    "href": "journal/2026-08-26-python-donut-plot.html#next",
+    "title": "Python, Data, and a Donut Plot",
+    "section": "Next",
+    "text": "Next\nI want to replace the sample numbers with real data from a week of my project and compare the chart with what I expected before I measured it."
+  },
+  {
+    "objectID": "journal/2026-08-19-first-entry.html",
+    "href": "journal/2026-08-19-first-entry.html",
+    "title": "Day zero — let’s go",
+    "section": "",
+    "text": "Got my own Quarto site folder in the family repo."
+  },
+  {
+    "objectID": "journal/2026-08-19-first-entry.html#what-i-did",
+    "href": "journal/2026-08-19-first-entry.html#what-i-did",
+    "title": "Day zero — let’s go",
+    "section": "",
+    "text": "Got my own Quarto site folder in the family repo."
+  },
+  {
+    "objectID": "journal/2026-08-19-first-entry.html#what-i-learned",
+    "href": "journal/2026-08-19-first-entry.html#what-i-learned",
+    "title": "Day zero — let’s go",
+    "section": "What I learned",
+    "text": "What I learned\nGit tracks every version of my markdown — I can experiment without fear."
+  },
+  {
+    "objectID": "journal/2026-08-19-first-entry.html#next",
+    "href": "journal/2026-08-19-first-entry.html#next",
+    "title": "Day zero — let’s go",
+    "section": "Next",
+    "text": "Next\nFill in About and complete Exercise 1 in markdown-basics."
+  },
+  {
+    "objectID": "journal/2026-08-19-first-entry.html#lists-practice",
+    "href": "journal/2026-08-19-first-entry.html#lists-practice",
+    "title": "Day zero — let’s go",
+    "section": "Lists practice",
+    "text": "Lists practice\nTools on my list:\n\nCursor Agent\nGitHub Copilot\nClaude Code (terminal)\n\nFun fact: This entire page is one .qmd file. No HTML required."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Jiahan Yu",
+    "section": "",
+    "text": "My corner of the internet — written in markdown, built with Quarto.\nThis summer I’m learning how AI assistants help with coding — without doing the thinking for me.\nSee my journal →"
+  },
+  {
+    "objectID": "index.html#hey-im-jiahan-yu",
+    "href": "index.html#hey-im-jiahan-yu",
+    "title": "Jiahan Yu",
+    "section": "",
+    "text": "My corner of the internet — written in markdown, built with Quarto.\nThis summer I’m learning how AI assistants help with coding — without doing the thinking for me.\nSee my journal →"
+  },
+  {
+    "objectID": "index.html#current-focus",
+    "href": "index.html#current-focus",
+    "title": "Jiahan Yu",
+    "section": "Current focus",
+    "text": "Current focus\n\n\n\nWeek\nGoal\n\n\n\n\n1\nMarkdown basics\n\n\n2\nQuarto preview + first entries\n\n\n3\nCustomize theme\n\n\n4\nGit pull requests with sibling"
+  },
+  {
+    "objectID": "index.html#challenge",
+    "href": "index.html#challenge",
+    "title": "Jiahan Yu",
+    "section": "Challenge",
+    "text": "Challenge\nChange the theme: in _quarto.yml to something that feels like you. Try flatly, darkly, or minty."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Hello I am Ballon Tickler I like tickling balloons\nReplace this with your story.\nPrompts:\n\nThree things you’re into right now\nA project you’d be proud to show a friend\nHow you want to use AI responsibly"
+  },
+  {
+    "objectID": "about.html#about-me",
+    "href": "about.html#about-me",
+    "title": "About",
+    "section": "",
+    "text": "Hello I am Ballon Tickler I like tickling balloons\nReplace this with your story.\nPrompts:\n\nThree things you’re into right now\nA project you’d be proud to show a friend\nHow you want to use AI responsibly"
+  },
+  {
+    "objectID": "about.html#why-markdown",
+    "href": "about.html#why-markdown",
+    "title": "About",
+    "section": "Why markdown?",
+    "text": "Why markdown?\nGitHub, Notion, AI chats, and site builders all understand markdown. Learn it once, use it everywhere.\nSee the full guide in the family repo docs."
+  },
+  {
+    "objectID": "journal/2026-08-26-my-learning-journal.html",
+    "href": "journal/2026-08-26-my-learning-journal.html",
+    "title": "My Learning Journey This Week",
+    "section": "",
+    "text": "For the last 2 weeks, I have been learning and trying out new things such as Python, Markdown, Blender, and right now Github under my parents supervision. Currently, I am writing this learning journal as an introduction exercise to VS Code and Github. Python\nI practiced Python in two Jupyter notebooks called hellworld.ipynb and chemi.ipynb.\nIn hellworld.ipynb, I learned how to:\n\nimport libraries such as NumPy and Matplotlib\ncreate variables and use scientific notation\ncalculate square roots\nwrite and use functions\nwork with arrays\nuse loops and array ranges\ncreate line plots with labels, colors, markers, and different line styles\nplot mathematical functions such as sine waves\n\nIn chemi.ipynb, I applied Python to a chemistry problem. I modeled a reversible chemical reaction, where substances A and B change into C and D over time. I used arrays to store the time and concentrations, a loop to calculate the changes, and Matplotlib to plot the results.\nThe chemistry exercise was more challenging because I had to translate a mathematical equation into Python instructions. I learned that programming can be used to simulate real-world processes, not just perform simple calculations. I also learned that errors are part of programming and can help me find what needs to be fixed.\nBlender\nI also worked on a Blender project called Jeentuh2.blend. I modeled a donut shape and added icing that drips over the sides. The most challenging part was shaping the icing so that the drips looked natural. I learned how 3D modeling can turn simple shapes into a more detailed object.\nGithub\nI learned how to use GitHub to manage my code and projects. I created a repository for my learning journal and pushed my changes from VS Code. I also learned how to create branches, make commits, and merge changes. This helps me keep track of my work and collaborate with others in the future."
+  },
+  {
+    "objectID": "journal/2026-08-26-my-learning-journal.html#what-i-did",
+    "href": "journal/2026-08-26-my-learning-journal.html#what-i-did",
+    "title": "My Learning Journey This Week",
+    "section": "",
+    "text": "For the last 2 weeks, I have been learning and trying out new things such as Python, Markdown, Blender, and right now Github under my parents supervision. Currently, I am writing this learning journal as an introduction exercise to VS Code and Github. Python\nI practiced Python in two Jupyter notebooks called hellworld.ipynb and chemi.ipynb.\nIn hellworld.ipynb, I learned how to:\n\nimport libraries such as NumPy and Matplotlib\ncreate variables and use scientific notation\ncalculate square roots\nwrite and use functions\nwork with arrays\nuse loops and array ranges\ncreate line plots with labels, colors, markers, and different line styles\nplot mathematical functions such as sine waves\n\nIn chemi.ipynb, I applied Python to a chemistry problem. I modeled a reversible chemical reaction, where substances A and B change into C and D over time. I used arrays to store the time and concentrations, a loop to calculate the changes, and Matplotlib to plot the results.\nThe chemistry exercise was more challenging because I had to translate a mathematical equation into Python instructions. I learned that programming can be used to simulate real-world processes, not just perform simple calculations. I also learned that errors are part of programming and can help me find what needs to be fixed.\nBlender\nI also worked on a Blender project called Jeentuh2.blend. I modeled a donut shape and added icing that drips over the sides. The most challenging part was shaping the icing so that the drips looked natural. I learned how 3D modeling can turn simple shapes into a more detailed object.\nGithub\nI learned how to use GitHub to manage my code and projects. I created a repository for my learning journal and pushed my changes from VS Code. I also learned how to create branches, make commits, and merge changes. This helps me keep track of my work and collaborate with others in the future."
+  },
+  {
+    "objectID": "journal/2026-08-26-my-learning-journal.html#what-i-enjoyed",
+    "href": "journal/2026-08-26-my-learning-journal.html#what-i-enjoyed",
+    "title": "My Learning Journey This Week",
+    "section": "What I enjoyed",
+    "text": "What I enjoyed\nI really liked learning the basics of Python. It was exciting and incredibely interesting to basically learn another language to talk to literal computers. Its really crazy when you think about it. The Blender project was also really fun. Sculpting my own donut esepcially making the icing was really fun. It felt really smooth throughout the process. Since i like writing, writing this learning journal has also been quite enjoyable."
+  },
+  {
+    "objectID": "journal/2026-08-26-my-learning-journal.html#what-was-challenging",
+    "href": "journal/2026-08-26-my-learning-journal.html#what-was-challenging",
+    "title": "My Learning Journey This Week",
+    "section": "What was challenging",
+    "text": "What was challenging\nOf course I also had my share of problems throughtout the projects. For example, when my father gave me quite the challenging chemistry exercise to solve in python. I think it took me 2 whole days to finally solve it. And not by myself but with help from my sister. I think my main problem was that I had just been introduced to all this new information about chemistry and python, which lead me to quickly get furstrated and honestly give up at heart. My blender project went pretty smoothly, but I did struggle for a short time with Github, but I think I was just overthinking it."
+  },
+  {
+    "objectID": "journal/2026-08-26-my-learning-journal.html#whats-next",
+    "href": "journal/2026-08-26-my-learning-journal.html#whats-next",
+    "title": "My Learning Journey This Week",
+    "section": "What’s next?",
+    "text": "What’s next?\nMy last goal for the summer break is creating a website purely about me. Ive got about 3 more days time to finish until my summer break ends. So I have to focus on the website now."
+  },
+  {
+    "objectID": "journal/2026-08-26-my-learning-journal.html#endwhat-i-think-i-have-improved-over-the-2-weeks",
+    "href": "journal/2026-08-26-my-learning-journal.html#endwhat-i-think-i-have-improved-over-the-2-weeks",
+    "title": "My Learning Journey This Week",
+    "section": "End/What I think I have improved over the 2 weeks",
+    "text": "End/What I think I have improved over the 2 weeks\nI think this is a good time to end my learning journal. Looking back, I think I have learned a lot of new things and I am proud of myself for going through with all these challenges. I think I have also learned a lot about myself and how I can efficiently learn new things instead of getting stuck. I also think that I will be able to apply all these skills in the future, especially in my schoolwork and group projects. Goodbye and maybe see you in the future."
+  },
+  {
+    "objectID": "journal/2026-08-26-signal-in-the-summer.html",
+    "href": "journal/2026-08-26-signal-in-the-summer.html",
+    "title": "Signal in the Summer",
+    "section": "",
+    "text": "An original song\n\n\nWake up to a window full of gold\nA brand-new question waiting to be told\nI do not need to know the whole way through\nI just need one small thing to try and do\n\n\n\nEvery wrong turn leaves a little light\nEvery messy draft gets closer to right\n\n\n\nI am finding my signal in the summer\nTurning little sparks into a sound\nI can ask for help and still discover\nThe best ideas are the ones I build out loud\nStep by step, beat by beat\nThere is something new beneath my feet\n\n\n\nCode on the screen, a rhythm in my head\nA thousand possibilities ahead\nI will keep the parts that feel like me\nAnd let the rest become a better melody\n\n\n\nNo shortcut, no perfect line\nJust a curious heart and a little time\nIf the answer hides, I will start again\nThat is how a question becomes a friend\n\n\n\nI am finding my signal in the summer\nTurning little sparks into a sound\nI can ask for help and still discover\nThe best ideas are the ones I build out loud\nStep by step, beat by beat\nI am making something that is me"
+  },
+  {
+    "objectID": "journal/2026-08-26-signal-in-the-summer.html#signal-in-the-summer",
+    "href": "journal/2026-08-26-signal-in-the-summer.html#signal-in-the-summer",
+    "title": "Signal in the Summer",
+    "section": "",
+    "text": "An original song\n\n\nWake up to a window full of gold\nA brand-new question waiting to be told\nI do not need to know the whole way through\nI just need one small thing to try and do\n\n\n\nEvery wrong turn leaves a little light\nEvery messy draft gets closer to right\n\n\n\nI am finding my signal in the summer\nTurning little sparks into a sound\nI can ask for help and still discover\nThe best ideas are the ones I build out loud\nStep by step, beat by beat\nThere is something new beneath my feet\n\n\n\nCode on the screen, a rhythm in my head\nA thousand possibilities ahead\nI will keep the parts that feel like me\nAnd let the rest become a better melody\n\n\n\nNo shortcut, no perfect line\nJust a curious heart and a little time\nIf the answer hides, I will start again\nThat is how a question becomes a friend\n\n\n\nI am finding my signal in the summer\nTurning little sparks into a sound\nI can ask for help and still discover\nThe best ideas are the ones I build out loud\nStep by step, beat by beat\nI am making something that is me"
+  },
+  {
+    "objectID": "journal/2026-08-26-signal-in-the-summer.html#note",
+    "href": "journal/2026-08-26-signal-in-the-summer.html#note",
+    "title": "Signal in the Summer",
+    "section": "Note",
+    "text": "Note\nI wrote this about learning with AI while keeping my own ideas in the driver’s seat. The song is mine because I chose the theme, shaped the lyrics, and revised the parts that did not sound like me."
+  }
+]
