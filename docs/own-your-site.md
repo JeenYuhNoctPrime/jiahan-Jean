@@ -21,10 +21,11 @@ Because the family repo is public, use this sequence:
 ```
 1. Make YOUR fork public
 2. Rename fork → jiahe-site / jiahan-site
-3. Keep only YOUR site (move to repo root)
-4. Preview with quarto
-5. Deploy — pick Option A (Actions) or Option B (quarto publish)
-6. Open your live URL on a phone
+3. Point local folder at your fork (git remote set-url — usually no re-clone)
+4. Keep only YOUR site (move to repo root)
+5. Preview with quarto
+6. Deploy — pick Option A (Actions) or Option B (quarto publish)
+7. Open your live URL on a phone
 ```
 
 ### Why this path?
@@ -33,6 +34,7 @@ Because the family repo is public, use this sequence:
 |--------|-----|
 | **Public fork** | Free GitHub Pages needs a public repo. Parent repo is already public, so your fork can be public too. |
 | **Rename to `*-site`** | Clear that this is *your* website, not the shared curriculum. |
+| **Fix `origin`, keep folder** | Local clone of dad's repo is fine — change the remote; do not archive and re-clone unless you want a clean start. |
 | **Site at repo root** | Simplest Pages + Quarto setup. |
 | **Deploy Option A (Actions)** | Recommended — every push to `main` updates the live site. |
 | **Deploy Option B (`quarto publish`)** | Faster first publish — you run a command; no workflow file yet. |
@@ -88,22 +90,59 @@ https://github.com/YOUR-USERNAME/jiahe-site.git
 
 ---
 
-## Step 3 — Clone (or update) on your computer
+## Step 3 — Point your local folder at your fork (usually no re-clone)
 
-**If you have not cloned yet:**
+You probably already have a local folder that was cloned from the **family** repo.
+You also have a **fork** on GitHub. Those are two different remotes until you fix `origin`.
+
+**You do not need to archive the old folder or clone again.** Change the remote URL.
+
+### Check where `origin` points
+
+```bash
+cd family-ai-summer-2026   # or whatever your local folder is called
+git remote -v
+```
+
+| What you see | Meaning |
+|--------------|---------|
+| `origin` → `Zhenglei-BCS/family-ai-summer-2026` | Still dad's repo — **change it** (below) |
+| `origin` → `YOUR-USERNAME/jiahe-site` (or `jiahan-site`) | Already correct |
+
+### Fix `origin` to your fork (keep this folder)
+
+Use your GitHub username and the **current** repo name on GitHub
+(`family-ai-summer-2026` until you rename, then `jiahe-site` / `jiahan-site`):
+
+```bash
+# Example — Jiahe after rename to jiahe-site:
+git remote set-url origin https://github.com/jheyyx/jiahe-site.git
+
+# Example — Jiahan after rename to jiahan-site:
+# git remote set-url origin https://github.com/JeenYuhNoctPrime/jiahan-site.git
+
+# Optional: keep the family curriculum as upstream (read tips, not your live site)
+git remote add upstream https://github.com/Zhenglei-BCS/family-ai-summer-2026.git
+# (Ignore error if upstream already exists)
+
+git remote -v
+git fetch origin
+git push -u origin main
+```
+
+If you rename the fork later, run `git remote set-url origin …` again with the new name.
+
+### Only re-clone if you want a clean start
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/jiahe-site.git
 cd jiahe-site
 ```
 
-**If you already cloned the old name:**
+Re-cloning is optional — useful if the old folder is confusing or broken, not required
+just because you forked.
 
-```bash
-cd family-ai-summer-2026
-git remote set-url origin https://github.com/YOUR-USERNAME/jiahe-site.git
-git remote -v
-```
+**Rule:** one local folder is enough. `origin` must show **your** username, not `Zhenglei-BCS`.
 
 ---
 
@@ -291,6 +330,7 @@ Finish one live Quarto site before switching builders.
 
 - [ ] Fork is **public** (family repo is already public)
 - [ ] Fork renamed to `jiahe-site` / `jiahan-site`
+- [ ] `git remote -v` shows `origin` → **my** username (not Zhenglei-BCS)
 - [ ] Only my content left (sibling folder removed from **my** repo)
 - [ ] `site-url` and GitHub link updated in `_quarto.yml`
 - [ ] `quarto preview` works locally
@@ -325,6 +365,7 @@ Private forks of a public parent are possible, but then free Pages usually will 
 | Action fails on Quarto | Open [workflow template](templates/deploy-quarto-pages.yml); read the red log in the Actions tab |
 | `quarto publish` fails | Check you are logged in to GitHub (`gh auth status`); see [quarto-setup.md](quarto-setup.md#publish-to-github-pages) |
 | Pushed to family repo by mistake | `git remote -v` — `origin` must be **your** username |
+| Local folder still dad's clone — re-clone? | **No** — see [Step 3](#step-3--point-your-local-folder-at-your-fork-usually-no-re-clone); `git remote set-url origin …` |
 | Fork still named `family-ai-summer-2026` | Step 2 — rename first |
 
 ---
