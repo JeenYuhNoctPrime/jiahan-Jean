@@ -16,6 +16,26 @@ quarto --version
 
 Optional: install **Quarto** extension in Cursor/VS Code for syntax highlighting.
 
+## Add Python code
+
+Quarto runs Python code through Jupyter. Install Jupyter once from PowerShell:
+
+```powershell
+python -m pip install jupyter
+```
+
+The `jupyter: python3` setting in `sites/your-name/_quarto.yml` selects Python for
+the site. Put executable Python in a QMD code cell:
+
+````markdown
+```{python}
+numbers = [1, 2, 3]
+sum(numbers)
+```
+````
+
+Then render or preview as usual. The result appears in the generated webpage.
+
 ---
 
 ## Your site folder

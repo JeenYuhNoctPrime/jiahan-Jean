@@ -4,7 +4,7 @@ title: "About"
 
 ## About me
 
-My name is Jiahe Yu. I love riding. 
+My name is Jiahe Yu. I love riding. I also enjoy reading and learning new things. I am curious about technology, science, and the world around me.
 
 Ideas to include:
 
@@ -18,3 +18,16 @@ Ideas to include:
 Every page is a `.qmd` file — markdown with a small config block at the top. Quarto turns them into this website when I run `quarto preview`.
 
 That means I focus on **writing**, not wrestling with HTML tags.
+
+## A little Python
+
+This code runs while Quarto builds the page:
+
+```{python}
+favorite_numbers = [3, 8, 16, 42]
+print(sum(favorite_numbers))
+```
+
+## I am only starting
+
+I need to remove this because my mom wrote this section. I am only starting to learn how to use Quarto and GitHub. I will learn more about them as I go along.
