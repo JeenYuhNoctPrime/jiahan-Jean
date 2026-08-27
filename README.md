@@ -25,7 +25,7 @@ Week 4+:  Git collaboration, deploy, optional Hugo for Jiahe (16)
 | 1. Write markdown | [docs/markdown-basics.md](docs/markdown-basics.md) |
 | 2. Pick a site builder | [docs/choosing-a-site-builder.md](docs/choosing-a-site-builder.md) |
 | 3. Build with Quarto | [docs/quarto-setup.md](docs/quarto-setup.md) |
-| 4. Publish | [docs/quarto-setup.md](docs/quarto-setup.md#publish-to-github-pages) |
+| 4. Publish your own site | [docs/own-your-site.md](docs/own-your-site.md) |
 
 ## Flagship project: Journal site (markdown → Quarto)
 
@@ -46,12 +46,14 @@ You write `.qmd` files (markdown + a small header). Run `quarto preview` — you
 
 ## Per-account options
 
-If each kid has their own GitHub account:
+Both kids have forked this repo. To go **separate paths** and deploy
+`jiahe-site` / `jiahan-site`:
 
-- **Start:** everyone edits their folder in this family repo
-- **Later:** fork to `theirname-site` or create `username.github.io`
+→ **[docs/own-your-site.md](docs/own-your-site.md)** — recommended path: make fork public → rename to `*-site` → deploy Pages
 
-Details in [docs/choosing-a-site-builder.md](docs/choosing-a-site-builder.md).
+(This family repo is **public**, so their forks can be public too.)
+
+Background on Quarto vs Hugo: [docs/choosing-a-site-builder.md](docs/choosing-a-site-builder.md).
 
 ## Other project ideas
 

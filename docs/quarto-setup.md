@@ -88,9 +88,19 @@ Quarto creates/updates a `gh-pages` branch. Enable Pages in repo Settings → Pa
 
 For multiple sites in one repo, a parent can set up Actions later. Ask AI: *"Create a GitHub Action that runs quarto render on sites/jiahe-yu/ and sites/jiahan-yu/ and deploys to Pages."*
 
-### Option 3 — Personal repo (Model B/C)
+### Option 3 — Personal `*-site` repo (recommended now)
 
-Kid owns `username.github.io`. Same `quarto publish gh-pages` from their repo root.
+Each kid owns `jiahe-site` / `jiahan-site` on their account.
+
+**Full deploy choices (Actions vs `quarto publish`):**
+[own-your-site.md — Step 6](own-your-site.md#step-6--deploy-choose-one)
+
+- Workflow template: [templates/deploy-quarto-pages.yml](templates/deploy-quarto-pages.yml)
+- Or quick publish:
+
+```bash
+quarto publish gh-pages
+```
 
 ---
 

@@ -90,12 +90,14 @@ family-ai-summer-2026/
 - Each person only edits their folder
 - Deploy: separate GitHub Pages site per subfolder (or one combined index linking to both)
 
-### Model B — Fork the template (good independence)
+### Model B — Fork → rename to `*-site` (you are here)
 
-1. Parent maintains `family-ai-summer-2026` as template
-2. Each kid: **Use this template** → creates `jiahe-site`, `jiahan-site` on their account
-3. They own their repo, learn full git workflow
-4. Deploy to `jiahe.github.io` via GitHub Pages
+1. Parent keeps `family-ai-summer-2026` as curriculum
+2. Each kid forks, renames to `jiahe-site` / `jiahan-site`
+3. Keep only their Quarto folder (optionally move it to repo root)
+4. Deploy with GitHub Actions → `https://USERNAME.github.io/jiahe-site/`
+
+**Full steps:** [own-your-site.md](own-your-site.md)
 
 ### Model C — Personal site repo (most "real world")
 
@@ -103,7 +105,7 @@ Each kid creates `username.github.io` — standard pattern for portfolios.
 
 Quarto or Hugo lives at repo root. Best for **Jiahe (16)** when ready to show colleges/employers.
 
-**Suggestion:** Start with **Model A** for weeks 1–4, migrate to **Model B or C** when comfortable.
+**Suggestion:** Family repo for shared lessons; Model B for each kid’s live site.
 
 ---
 
