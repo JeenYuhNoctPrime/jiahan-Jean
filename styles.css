@@ -3,3 +3,79 @@
 .card {
   margin-bottom: 1rem;
 }
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0 4rem;
+}
+
+.project-card {
+  overflow: hidden;
+  border: 1px solid #d8d2c7;
+  border-radius: 8px;
+  background: #fffdf8;
+  box-shadow: 0 0.75rem 2rem rgba(72, 58, 38, 0.08);
+}
+
+.project-preview {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #15131a;
+}
+
+.project-preview iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.project-card-body {
+  padding: 1.25rem 1.35rem 1.4rem;
+}
+
+.project-kicker {
+  margin: 0 0 0.55rem;
+  color: #8b5e34;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.project-card h2 {
+  margin: 0 0 0.5rem;
+}
+
+.project-card p:not(.project-kicker) {
+  margin-bottom: 1rem;
+  color: #625d55;
+}
+
+.project-link {
+  font-weight: 700;
+}
+
+.project-placeholder {
+  display: grid;
+  min-height: 12rem;
+  place-items: center;
+  border-bottom: 1px dashed #d8d2c7;
+  color: #b28b5a;
+  font-size: 4rem;
+  font-weight: 300;
+}
+
+.project-card-empty {
+  border-style: dashed;
+  box-shadow: none;
+}
+
+@media (max-width: 600px) {
+  .project-grid {
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+}

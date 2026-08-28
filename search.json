@@ -77,6 +77,27 @@
     "text": "Lists practice\nTools on my list:\n\nCursor Agent\nGitHub Copilot\nClaude Code (terminal)\n\nFun fact: This entire page is one .qmd file. No HTML required."
   },
   {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Hello I am Ballon Tickler I like tickling balloons\nReplace this with your story.\nPrompts:\n\nThree things you’re into right now\nA project you’d be proud to show a friend\nHow you want to use AI responsibly"
+  },
+  {
+    "objectID": "about.html#about-me",
+    "href": "about.html#about-me",
+    "title": "About",
+    "section": "",
+    "text": "Hello I am Ballon Tickler I like tickling balloons\nReplace this with your story.\nPrompts:\n\nThree things you’re into right now\nA project you’d be proud to show a friend\nHow you want to use AI responsibly"
+  },
+  {
+    "objectID": "about.html#why-markdown",
+    "href": "about.html#why-markdown",
+    "title": "About",
+    "section": "Why markdown?",
+    "text": "Why markdown?\nGitHub, Notion, AI chats, and site builders all understand markdown. Learn it once, use it everywhere.\nSee the full guide in the family repo docs."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Jiahan Yu",
@@ -105,25 +126,18 @@
     "text": "Challenge\nChange the theme: in _quarto.yml to something that feels like you. Try flatly, darkly, or minty."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
     "section": "",
-    "text": "Hello I am Ballon Tickler I like tickling balloons\nReplace this with your story.\nPrompts:\n\nThree things you’re into right now\nA project you’d be proud to show a friend\nHow you want to use AI responsibly"
+    "text": "Mini game · August 2026\n\n## Whack-a-Bud A fast little arcade game about tapping the right bud before time runs out.\nPlay full game →\n\n\n\n\n+\n\n\n\nNext up\n\n## More experiments soon This gallery is ready for the next idea, sketch, or weekend build."
   },
   {
-    "objectID": "about.html#about-me",
-    "href": "about.html#about-me",
-    "title": "About",
+    "objectID": "projects.html#a-small-shelf-of-things-ive-made",
+    "href": "projects.html#a-small-shelf-of-things-ive-made",
+    "title": "Projects",
     "section": "",
-    "text": "Hello I am Ballon Tickler I like tickling balloons\nReplace this with your story.\nPrompts:\n\nThree things you’re into right now\nA project you’d be proud to show a friend\nHow you want to use AI responsibly"
-  },
-  {
-    "objectID": "about.html#why-markdown",
-    "href": "about.html#why-markdown",
-    "title": "About",
-    "section": "Why markdown?",
-    "text": "Why markdown?\nGitHub, Notion, AI chats, and site builders all understand markdown. Learn it once, use it everywhere.\nSee the full guide in the family repo docs."
+    "text": "Mini game · August 2026\n\n## Whack-a-Bud A fast little arcade game about tapping the right bud before time runs out.\nPlay full game →\n\n\n\n\n+\n\n\n\nNext up\n\n## More experiments soon This gallery is ready for the next idea, sketch, or weekend build."
   },
   {
     "objectID": "journal/2026-08-26-my-learning-journal.html",

@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whack-a-Bud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#160f26;
+    --paper:#fdf3e0;
+    --common:#6fce86;
+    --common-dark:#2d5c3a;
+    --uncommon:#4fb3e0;
+    --uncommon-dark:#1f4f66;
+    --rare:#b083ef;
+    --rare-dark:#432b6e;
+    --epic:#f0954c;
+    --epic-dark:#7a3d16;
+    --legendary:#ef5361;
+    --legendary-dark:#701c24;
+    --chromite:#f7dd5c;
+    --chromite-dark:#7a611c;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse at 50% -10%, #3a2f66 0%, #1c1633 45%, #0f0b1c 100%);
+    font-family:'Trebuchet MS','Segoe UI',sans-serif;
+    color:var(--paper);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:18px 14px 40px;
+    overflow-x:hidden;
+  }
+  .pixel-font{ font-family:'Press Start 2P', monospace; }
+
+  h1{
+    font-family:'Press Start 2P', monospace;
+    font-size:1.4rem;
+    letter-spacing:1px;
+    margin:6px 0 4px;
+    text-shadow:3px 3px 0 #000;
+    text-align:center;
+    color:#fff2cf;
+  }
+  .subtitle{
+    font-size:.8rem;
+    opacity:.75;
+    margin-bottom:14px;
+    text-align:center;
+  }
+
+  /* ---------- HUD ---------- */
+  .hud{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    background:rgba(0,0,0,.35);
+    border:3px solid #000;
+    border-radius:10px;
+    padding:8px 16px;
+    margin-bottom:16px;
+    box-shadow:0 4px 0 rgba(0,0,0,.4);
+    font-family:'Press Start 2P', monospace;
+    font-size:.65rem;
+  }
+  .hud .count{ color:#ffe27a; }
+  .legend{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-bottom:14px;
+    font-size:.55rem;
+    font-family:'Press Start 2P', monospace;
+  }
+  .legend span{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    background:rgba(0,0,0,.3);
+    padding:4px 7px;
+    border-radius:6px;
+    border:1px solid rgba(255,255,255,.15);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.5);}
+
+  /* ---------- BOARD ---------- */
+  .board{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:18px;
+    background:#3c2f1a;
+    border:6px solid #241a0e;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 8px 0 #140d06, inset 0 0 40px rgba(0,0,0,.4);
+  }
+  .hole{
+    position:relative;
+    width:126px;
+    height:126px;
+    border-radius:50%;
+    background:radial-gradient(ellipse at 50% 40%, #5c4522 0%, #2e2110 70%, #1b1409 100%);
+    border:4px solid #17100a;
+    box-shadow:inset 0 6px 10px rgba(0,0,0,.6);
+    cursor:crosshair;
+    overflow:visible;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .hole:active{ filter:brightness(1.15); }
+
+  .sprite-slot{
+    position:relative;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    pointer-events:none;
+  }
+  .sprite-wrap{
+    position:relative;
+    transform:translateY(120%);
+    transition:none;
+  }
+  .sprite-wrap.up{
+    animation:popup .35s cubic-bezier(.34,1.56,.64,1) forwards, bob 1.1s ease-in-out infinite .35s;
+  }
+  .sprite-wrap.down{
+    animation:popdown .28s ease-in forwards;
+  }
+  @keyframes popup{
+    0%{ transform:translateY(120%); }
+    100%{ transform:translateY(6%); }
+  }
+  @keyframes popdown{
+    0%{ transform:translateY(6%) scale(1,1); }
+    25%{ transform:translateY(12%) scale(1.18,0.78); }
+    100%{ transform:translateY(120%) scale(0.88,1.08); }
+  }
+  @keyframes bob{
+    0%,100%{ transform:translateY(6%) rotate(0deg); }
+    50%{ transform:translateY(-2%) rotate(-2deg); }
+  }
+
+  canvas.sprite-canvas{
+    image-rendering:pixelated;
+    image-rendering:crisp-edges;
+    display:block;
+  }
+  #personaCanvas{ width:210px; height:210px; image-rendering:pixelated; image-rendering:crisp-edges; }
+  #yokomaCanvas{ width:250px; height:250px; image-rendering:pixelated; image-rendering:crisp-edges; }
+
+  .toast{
+    position:fixed;
+    top:16%;
+    left:50%;
+    transform:translate(-50%,-8px);
+    background:rgba(15,11,26,.94);
+    color:#fff;
+    border:2px solid rgba(255,255,255,.3);
+    padding:9px 18px;
+    border-radius:9px;
+    font-size:.85rem;
+    letter-spacing:.3px;
+    opacity:0;
+    transition:opacity .22s ease, transform .22s ease;
+    z-index:500;
+    pointer-events:none;
+    box-shadow:0 6px 18px rgba(0,0,0,.4);
+  }
+  .toast.show{ opacity:1; transform:translate(-50%,0); }
+
+  /* particle fx */
+  .fx{
+    position:absolute;
+    pointer-events:none;
+    border-radius:2px;
+  }
+  .fx-fire{ background:#ff8a3d; box-shadow:0 0 6px #ff6a1a; animation:riseFade 900ms ease-out infinite; }
+  .fx-ice{ background:#dff3ff; box-shadow:0 0 6px #9fdcff; animation:riseFade 1100ms ease-out infinite; }
+  .fx-dark{ background:#8a5cf2; box-shadow:0 0 6px #6a2cf2; animation:driftFade 1200ms ease-in-out infinite; }
+  .fx-gold{ background:#fff2a8; box-shadow:0 0 8px #ffe27a; animation:riseFade 700ms ease-out infinite; }
+  @keyframes riseFade{
+    0%{ opacity:1; transform:translate(0,0) scale(1); }
+    100%{ opacity:0; transform:translate(var(--dx,6px),-26px) scale(.4); }
+  }
+  @keyframes driftFade{
+    0%{ opacity:.9; transform:translate(0,0); }
+    50%{ opacity:.5; transform:translate(var(--dx,-8px),-8px); }
+    100%{ opacity:0; transform:translate(var(--dx,8px),-16px); }
+  }
+
+  /* orb throw */
+  .orb{
+    position:absolute;
+    width:16px;height:16px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff, #ff5b5b 45%, #7a0f0f 100%);
+    border:2px solid #2b0505;
+    left:50%;
+    top:-40px;
+    transform:translateX(-50%);
+    animation:orbFall .32s ease-in forwards;
+    z-index:5;
+  }
+  @keyframes orbFall{
+    0%{ top:-60px; transform:translateX(-50%) scale(.8) rotate(0deg); }
+    100%{ top:38%; transform:translateX(-50%) scale(1.15) rotate(180deg); }
+  }
+  .flash{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background:#fff;
+    opacity:0;
+    pointer-events:none;
+  }
+  .flash.hit{ animation:flashPop .3s ease-out forwards; }
+  @keyframes flashPop{
+    0%{ opacity:.95; transform:scale(.3); }
+    100%{ opacity:0; transform:scale(1.6); }
+  }
+
+  footer{
+    margin-top:22px;
+    font-size:.7rem;
+    opacity:.5;
+    text-align:center;
+  }
+
+  /* ---------- PERSONA CAPTURE OVERLAY ---------- */
+  .persona-overlay{
+    position:fixed; inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.75);
+    z-index:100;
+    padding:16px;
+  }
+  .persona-overlay.show{ display:flex; }
+  .persona-card{
+    position:relative;
+    width:min(720px, 100%);
+    background:#0c0c14;
+    border:4px solid #000;
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:0 0 0 3px #fff2, 0 20px 60px rgba(0,0,0,.6);
+    animation:cardIn .35s ease-out;
+  }
+  @keyframes cardIn{
+    0%{ transform:scale(.85) rotate(-1.5deg); opacity:0; }
+    100%{ transform:scale(1) rotate(0); opacity:1; }
+  }
+  .rip-banner{
+    position:relative;
+    background:#8f1016;
+    padding:14px 20px;
+    clip-path:polygon(0 0,100% 0,100% 78%,92% 100%,80% 82%,66% 100%,52% 80%,38% 100%,24% 82%,10% 100%,0 78%);
+    text-align:center;
+  }
+  .rip-banner h2{
+    font-family:'Press Start 2P', monospace;
+    font-size:1rem;
+    color:#fff;
+    margin:0;
+    text-shadow:2px 2px 0 #000;
+    letter-spacing:1px;
+  }
+  .rip-banner .caught-label{
+    font-size:.6rem;
+    color:#ffd9d9;
+    margin-top:4px;
+    font-family:'Press Start 2P', monospace;
+  }
+  .persona-body{
+    display:flex;
+    flex-wrap:wrap;
+  }
+  .persona-left{
+    flex:0 0 220px;
+    background:#161022;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    position:relative;
+    border-right:3px solid #000;
+  }
+  .persona-left canvas{ image-rendering:pixelated; }
+  .persona-right{
+    flex:1 1 260px;
+    padding:20px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .rarity-pill{
+    align-self:flex-start;
+    font-family:'Press Start 2P', monospace;
+    font-size:.6rem;
+    padding:5px 10px;
+    border-radius:20px;
+    color:#140f22;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+  .persona-right h3{
+    margin:0;
+    font-size:1.3rem;
+    color:#fff;
+  }
+  .persona-right p{
+    margin:0;
+    font-size:.9rem;
+    line-height:1.5;
+    color:#e8e1f5;
+  }
+  .continue-btn{
+    margin-top:auto;
+    align-self:flex-end;
+    background:#ffd75c;
+    border:3px solid #000;
+    border-radius:6px;
+    padding:9px 18px;
+    font-family:'Press Start 2P', monospace;
+    font-size:.65rem;
+    cursor:pointer;
+    box-shadow:0 4px 0 #7a611c;
+  }
+  .continue-btn:active{ transform:translateY(3px); box-shadow:0 1px 0 #7a611c; }
+
+  /* ---------- YOKOMA JUMPSCARE ---------- */
+  .yokoma-overlay{
+    position:fixed; inset:0;
+    background:#000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:200;
+    overflow:hidden;
+  }
+  .yokoma-overlay.show{ display:flex; }
+  .yokoma-flash{
+    position:absolute; inset:0;
+    background:radial-gradient(circle at 50% 50%, #3a1fcf, #0a0620 70%);
+    opacity:0;
+  }
+  .yokoma-flash.on{ animation:ykFlash .5s ease-out; }
+  @keyframes ykFlash{
+    0%{opacity:0;} 15%{opacity:1;} 100%{opacity:.6;}
+  }
+  .yokoma-big{
+    position:relative;
+    transform:scale(.3);
+    opacity:0;
+    filter:drop-shadow(0 0 30px #6a3dff);
+  }
+  .yokoma-big.grow{
+    animation:ykGrow .55s cubic-bezier(.2,.9,.3,1.2) forwards;
+  }
+  .yokoma-big.shrink{
+    animation:ykShrink .5s ease-in forwards;
+  }
+  @keyframes ykGrow{
+    0%{ transform:scale(.2) rotate(0deg); opacity:0; }
+    60%{ transform:scale(1.35) rotate(-3deg); opacity:1; }
+    80%{ transform:scale(1.15) rotate(2deg); }
+    100%{ transform:scale(1.25) rotate(0deg); opacity:1; }
+  }
+  @keyframes ykShrink{
+    0%{ transform:scale(1.25); opacity:1; }
+    100%{ transform:scale(0); opacity:0; }
+  }
+  .yokoma-text{
+    position:absolute;
+    top:8%;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:'Press Start 2P', monospace;
+    font-size:2.2rem;
+    color:#fff;
+    text-shadow:4px 4px 0 #6a1fcf;
+    opacity:0;
+  }
+  .yokoma-text.show{ animation:ykText .5s ease-out forwards; }
+  @keyframes ykText{
+    0%{ opacity:0; transform:translateX(-50%) scale(.5); }
+    50%{ opacity:1; transform:translateX(-50%) scale(1.3); }
+    100%{ opacity:1; transform:translateX(-50%) scale(1); }
+  }
+
+  /* ---------- VICTORY ---------- */
+  .victory-overlay{
+    position:fixed; inset:0;
+    background:rgba(5,3,15,.92);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:300;
+    padding:20px;
+  }
+  .victory-overlay.show{ display:flex; }
+  .victory-card{
+    background:linear-gradient(160deg,#2a1f4d,#150f28);
+    border:4px solid #ffd75c;
+    border-radius:12px;
+    padding:30px;
+    max-width:520px;
+    text-align:center;
+    box-shadow:0 0 40px rgba(255,215,92,.4);
+  }
+  .victory-card h2{
+    font-family:'Press Start 2P', monospace;
+    color:#ffd75c;
+    font-size:1.3rem;
+    text-shadow:3px 3px 0 #000;
+  }
+  .victory-card p{ font-size:.9rem; line-height:1.6; color:#e8e1f5; }
+
+  @media (max-width:560px){
+    .hole{ width:98px; height:98px; }
+    .board{ padding:14px; gap:12px; }
+    h1{ font-size:1.05rem; }
+    .persona-left{ flex-basis:100%; border-right:none; border-bottom:3px solid #000; }
+  }
+</style>
+</head>
+<body>
+
+  <h1>WHACK-A-BUD</h1>
+  <div class="subtitle">throw your bud-orb and catch 'em all — 16 buds are hiding out there</div>
+
+  <div class="hud">
+    <div>CAUGHT: <span class="count" id="caughtCount">0</span> / 16</div>
+  </div>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="board" id="board"></div>
+
+  <footer>tip: the rarer the bud, the faster it dives back underground. legendary buds hit hard.</footer>
+
+  <!-- Persona capture screen -->
+  <div class="persona-overlay" id="personaOverlay">
+    <div class="persona-card">
+      <div class="rip-banner">
+        <h2 id="personaName">???</h2>
+        <div class="caught-label" id="personaCaughtLabel">BUD CAUGHT!</div>
+      </div>
+      <div class="persona-body">
+        <div class="persona-left"><canvas id="personaCanvas" width="160" height="160"></canvas></div>
+        <div class="persona-right" id="personaRightBg">
+          <div class="rarity-pill" id="personaRarity">common</div>
+          <h3 id="personaTitle">Bud Name</h3>
+          <p id="personaDesc">Description text goes here.</p>
+          <button class="continue-btn" id="continueBtn">Continue ▶</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Yokoma jumpscare -->
+  <div class="yokoma-overlay" id="yokomaOverlay">
+    <div class="yokoma-flash" id="yokomaFlash"></div>
+    <div class="yokoma-text" id="yokomaText">?!</div>
+    <div class="yokoma-big" id="yokomaBig"><canvas id="yokomaCanvas" width="220" height="220"></canvas></div>
+  </div>
+
+  <!-- Victory -->
+  <div class="victory-overlay" id="victoryOverlay">
+    <div class="victory-card">
+      <h2>ALL 16 BUDS CAUGHT!</h2>
+      <p>Even Fytrolon couldn't stay hidden forever. Your bud-orb collection is complete — from Piggemy's very first snort to the last flicker of the Chromite itself.</p>
+      <p style="opacity:.7; font-size:.75rem;">Refresh the page to hunt again.</p>
+    </div>
+  </div>
+
+<script>
+/* =========================================================
+   WHACK-A-BUD
+   ========================================================= */
+
+/* ---------- small canvas pixel-art creature renderer ---------- */
+// logical grid is drawn at integer "pixel" coordinates on a small canvas,
+// then displayed scaled up with image-rendering:pixelated for a chunky retro look.
+const GRID = 28; // logical pixels per sprite
+
+function px(ctx, x, y, w, h, color){
+  ctx.fillStyle = color;
+  ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h));
+}
+function pxCircle(ctx, cx, cy, r, color){
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  // draw as blocky circle by stepping - keeps pixel aesthetic
+  for(let y=-r; y<=r; y++){
+    for(let x=-r; x<=r; x++){
+      if(x*x+y*y <= r*r+r*0.4){
+        ctx.fillRect(Math.round(cx+x), Math.round(cy+y), 1, 1);
+      }
+    }
+  }
+}
+function pxEllipseBlock(ctx, cx, cy, rx, ry, color){
+  ctx.fillStyle = color;
+  for(let y=-ry; y<=ry; y++){
+    for(let x=-rx; x<=rx; x++){
+      if((x*x)/(rx*rx) + (y*y)/(ry*ry) <= 1){
+        ctx.fillRect(Math.round(cx+x), Math.round(cy+y), 1, 1);
+      }
+    }
+  }
+}
+function pxTri(ctx, x1,y1,x2,y2,x3,y3,color){
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.lineTo(x3,y3); ctx.closePath();
+  ctx.fill();
+}
+
+/* post-process: draw a 1px dark outline around every opaque shape so the
+   silhouette reads clearly even at small sizes */
+function addOutline(ctx, size, color){
+  const img = ctx.getImageData(0,0,size,size);
+  const data = img.data;
+  const alphaAt = (x,y)=>{
+    if(x<0||y<0||x>=size||y>=size) return 0;
+    return data[(y*size+x)*4+3];
+  };
+  const toFill = [];
+  for(let y=0;y<size;y++){
+    for(let x=0;x<size;x++){
+      if(alphaAt(x,y)===0){
+        if(alphaAt(x+1,y)>0||alphaAt(x-1,y)>0||alphaAt(x,y+1)>0||alphaAt(x,y-1)>0){
+          toFill.push([x,y]);
+        }
+      }
+    }
+  }
+  ctx.fillStyle = color;
+  toFill.forEach(([x,y])=>ctx.fillRect(x,y,1,1));
+}
+
+/* draws a bud onto a canvas context, cfg describes body + accessories */
+function drawBud(ctx, cfg, t){
+  t = t || 0; // animation time in seconds, used for tiny idle wobble in static frames (kept subtle)
+  ctx.clearRect(0,0,GRID,GRID);
+  ctx.imageSmoothingEnabled = false;
+
+  const cx = GRID/2, cy = GRID*0.62;
+  const rx = cfg.size.rx, ry = cfg.size.ry;
+  const main = cfg.main, shade = cfg.shade;
+
+  // ---- back accessories (drawn behind body) ----
+  if(cfg.wings){
+    const wc = cfg.wings === 'fire' ? '#ffb15c' : '#eaf9ff';
+    const wc2 = cfg.wings === 'fire' ? '#ff6a1a' : '#bfe8ff';
+    pxTri(ctx, cx-rx*0.4, cy-ry*0.2, cx-rx*1.9, cy-ry*1.6, cx-rx*0.9, cy+ry*0.6, wc2);
+    pxTri(ctx, cx-rx*0.4, cy-ry*0.2, cx-rx*1.5, cy-ry*0.9, cx-rx*0.6, cy+ry*0.8, wc);
+    pxTri(ctx, cx+rx*0.4, cy-ry*0.2, cx+rx*1.9, cy-ry*1.6, cx+rx*0.9, cy+ry*0.6, wc2);
+    pxTri(ctx, cx+rx*0.4, cy-ry*0.2, cx+rx*1.5, cy-ry*0.9, cx+rx*0.6, cy+ry*0.8, wc);
+  }
+  if(cfg.blueFlameTail){
+    pxTri(ctx, cx+rx*0.7, cy+ry*0.3, cx+rx*1.7, cy-ry*0.6, cx+rx*1.0, cy+ry*0.9, '#3d6bff');
+    pxTri(ctx, cx+rx*0.8, cy+ry*0.4, cx+rx*1.35, cy-ry*0.1, cx+rx*1.0, cy+ry*0.8, '#8fb4ff');
+  }
+  if(cfg.darkFire){
+    pxTri(ctx, cx-rx*0.9, cy+ry*0.2, cx-rx*1.7, cy-ry*0.7, cx-rx*1.0, cy+ry*0.8, '#5b2fae');
+    pxTri(ctx, cx-rx*0.95, cy+ry*0.3, cx-rx*1.4, cy-ry*0.2, cx-rx*1.0, cy+ry*0.7, '#8a5cf2');
+  }
+  if(cfg.dogTail){
+    pxEllipseBlock(ctx, cx+rx*1.05, cy+ry*0.1, rx*0.35, ry*0.7, shade);
+  }
+  if(cfg.tail === 'curl'){
+    pxEllipseBlock(ctx, cx+rx*1.0, cy+ry*0.3, rx*0.28, ry*0.28, main);
+  }
+  if(cfg.tail === 'straight'){
+    pxEllipseBlock(ctx, cx+rx*1.05, cy+ry*0.0, rx*0.22, ry*0.55, main);
+  }
+
+  // ---- ears (behind/above head) ----
+  const earY = cy-ry*0.95;
+  if(cfg.ear === 'round'){
+    pxEllipseBlock(ctx, cx-rx*0.55, earY, rx*0.32, ry*0.34, cfg.earColor||shade);
+    pxEllipseBlock(ctx, cx+rx*0.55, earY, rx*0.32, ry*0.34, cfg.earColor||shade);
+  } else if(cfg.ear === 'pointy'){
+    pxTri(ctx, cx-rx*0.75, cy-ry*0.7, cx-rx*0.35, cy-ry*1.7, cx-rx*0.15, cy-ry*0.7, cfg.earColor||shade);
+    pxTri(ctx, cx+rx*0.75, cy-ry*0.7, cx+rx*0.35, cy-ry*1.7, cx+rx*0.15, cy-ry*0.7, cfg.earColor||shade);
+  } else if(cfg.ear === 'floppy'){
+    pxEllipseBlock(ctx, cx-rx*0.85, cy-ry*0.35, rx*0.25, ry*0.6, cfg.earColor||shade);
+    pxEllipseBlock(ctx, cx+rx*0.85, cy-ry*0.35, rx*0.25, ry*0.6, cfg.earColor||shade);
+  } else if(cfg.ear === 'leaf'){
+    pxTri(ctx, cx-rx*0.6, cy-ry*0.8, cx-rx*0.2, cy-ry*1.8, cx-rx*0.05, cy-ry*0.75, '#3f8a3a');
+    pxTri(ctx, cx+rx*0.6, cy-ry*0.8, cx+rx*0.2, cy-ry*1.8, cx+rx*0.05, cy-ry*0.75, '#3f8a3a');
+  }
+  if(cfg.horn){
+    pxTri(ctx, cx-rx*0.6, cy-ry*0.75, cx-rx*0.9, cy-ry*1.9, cx-rx*0.25, cy-ry*0.85, cfg.hornColor||'#f2e6c9');
+    pxTri(ctx, cx+rx*0.6, cy-ry*0.75, cx+rx*0.9, cy-ry*1.9, cx+rx*0.25, cy-ry*0.85, cfg.hornColor||'#f2e6c9');
+  }
+
+  // ---- muscly shoulders ----
+  if(cfg.muscly){
+    pxEllipseBlock(ctx, cx-rx*0.95, cy-ry*0.15, rx*0.42, ry*0.5, shade);
+    pxEllipseBlock(ctx, cx+rx*0.95, cy-ry*0.15, rx*0.42, ry*0.5, shade);
+  }
+
+  // ---- body (two-tone) ----
+  pxEllipseBlock(ctx, cx, cy+ry*0.08, rx, ry, shade);
+  pxEllipseBlock(ctx, cx, cy-ry*0.08, rx*0.94, ry*0.92, main);
+
+  if(cfg.belly){
+    pxEllipseBlock(ctx, cx, cy+ry*0.25, rx*0.55, ry*0.5, '#dff0ff');
+  }
+  if(cfg.shell){
+    pxEllipseBlock(ctx, cx, cy-ry*0.25, rx*0.85, ry*0.55, cfg.shellColor||'#c9ecf2');
+  }
+  if(cfg.leafy){
+    const lc = '#4f9a4a';
+    pxTri(ctx, cx-rx*0.9, cy, cx-rx*1.15, cy-ry*0.35, cx-rx*0.6, cy-ry*0.15, lc);
+    pxTri(ctx, cx+rx*0.9, cy+ry*0.2, cx+rx*1.15, cy-ry*0.15, cx+rx*0.6, cy+ry*0.35, lc);
+    pxTri(ctx, cx-rx*0.2, cy-ry*0.95, cx-rx*0.5, cy-ry*1.25, cx+rx*0.05, cy-ry*1.1, lc);
+  }
+  if(cfg.cracks){
+    px(ctx, cx-rx*0.3, cy-ry*0.1, 2, 2, cfg.cracks);
+    px(ctx, cx+rx*0.15, cy+ry*0.2, 2, 2, cfg.cracks);
+    px(ctx, cx-rx*0.05, cy+ry*0.4, 2, 2, cfg.cracks);
+  }
+  if(cfg.chromiteGlow){
+    px(ctx, cx-rx*0.6, cy-ry*0.5, 2, 2, '#fff2a8');
+    px(ctx, cx+rx*0.7, cy-ry*0.2, 2, 2, '#fff2a8');
+    px(ctx, cx-rx*0.3, cy+ry*0.7, 2, 2, '#fff2a8');
+  }
+  if(cfg.trunk){
+    pxEllipseBlock(ctx, cx, cy+ry*0.55, rx*0.16, ry*0.55, cfg.earColor||shade);
+  }
+  if(cfg.snout){
+    pxEllipseBlock(ctx, cx, cy+ry*0.3, rx*0.28, ry*0.2, cfg.snoutColor||'#f7cdd8');
+  }
+  if(cfg.scarf){
+    px(ctx, cx-rx*0.75, cy-ry*0.05, rx*1.5, ry*0.22, '#c94b6a');
+  }
+  if(cfg.backPlates){
+    px(ctx, cx-rx*0.3, cy-ry*1.02, rx*0.2, ry*0.22, shade);
+    px(ctx, cx+rx*0.05, cy-ry*1.05, rx*0.2, ry*0.22, shade);
+  }
+
+  // paws / claw glow
+  if(cfg.clawGlow){
+    px(ctx, cx-rx*0.5, cy+ry*0.85, 2, 2, cfg.clawGlow);
+    px(ctx, cx+rx*0.3, cy+ry*0.85, 2, 2, cfg.clawGlow);
+  }
+
+  // ---- extra distinguishing marks ----
+  if(cfg.blush){
+    px(ctx, cx-rx*0.75, cy+ry*0.05, 2, 1.4, '#f28ba0');
+    px(ctx, cx+rx*0.45, cy+ry*0.05, 2, 1.4, '#f28ba0');
+  }
+  if(cfg.tusks){
+    pxTri(ctx, cx-rx*0.15, cy+ry*0.7, cx-rx*0.35, cy+ry*1.05, cx-rx*0.02, cy+ry*0.95, '#f4f0e2');
+    pxTri(ctx, cx+rx*0.15, cy+ry*0.7, cx+rx*0.35, cy+ry*1.05, cx+rx*0.02, cy+ry*0.95, '#f4f0e2');
+  }
+  if(cfg.noseRing){
+    px(ctx, cx-1, cy+ry*0.42, 2.4, 1.6, '#3a3a3a');
+  }
+  if(cfg.flowerBud){
+    pxCircle(ctx, cx, cy-ry*1.55, 2.6, '#ffd75c');
+    px(ctx, cx-0.6, cy-ry*1.55-0.6, 1.2,1.2, '#ff9d3d');
+  }
+  if(cfg.shellLines){
+    px(ctx, cx-rx*0.55, cy-ry*0.15, rx*1.1, 1, cfg.shade);
+    px(ctx, cx-rx*0.4, cy+ry*0.15, rx*0.8, 1, cfg.shade);
+  }
+  if(cfg.stripeTail){
+    px(ctx, cx+rx*0.95, cy-ry*0.15, 1.4, ry*0.3, cfg.shade);
+  }
+  if(cfg.collar){
+    px(ctx, cx-rx*0.6, cy-ry*0.55, rx*1.2, ry*0.18, '#e8c65a');
+  }
+  if(cfg.berries){
+    px(ctx, cx-rx*0.7, cy-ry*0.1, 1.6,1.6, '#c92f3a');
+    px(ctx, cx+rx*0.55, cy+ry*0.35, 1.6,1.6, '#c92f3a');
+    px(ctx, cx-rx*0.1, cy+ry*0.65, 1.6,1.6, '#c92f3a');
+  }
+  if(cfg.finTop){
+    pxTri(ctx, cx-rx*0.25, cy-ry*0.85, cx, cy-ry*1.5, cx+rx*0.25, cy-ry*0.85, cfg.shade);
+  }
+  if(cfg.gillLines){
+    px(ctx, cx-rx*0.95, cy-ry*0.1, 1, ry*0.4, cfg.shade);
+    px(ctx, cx-rx*0.8, cy+ry*0.05, 1, ry*0.3, cfg.shade);
+  }
+  if(cfg.tailFlame){
+    pxTri(ctx, cx+rx*0.9, cy+ry*0.2, cx+rx*1.4, cy-ry*0.3, cx+rx*1.1, cy+ry*0.55, '#ffcf6b');
+  }
+  if(cfg.wingVeins){
+    px(ctx, cx-rx*1.1, cy-ry*0.6, rx*0.9, .8, cfg.shade);
+    px(ctx, cx+rx*1.1-rx*0.9, cy-ry*0.6, rx*0.9, .8, cfg.shade);
+  }
+  if(cfg.crownSpikes){
+    pxTri(ctx, cx-rx*0.15, cy-ry*1.05, cx-rx*0.3, cy-ry*1.75, cx, cy-ry*1.1, cfg.shade);
+    pxTri(ctx, cx+rx*0.15, cy-ry*1.05, cx+rx*0.3, cy-ry*1.75, cx, cy-ry*1.1, cfg.shade);
+    pxTri(ctx, cx-rx*0.02, cy-ry*1.15, cx-rx*0.1, cy-ry*2.0, cx+rx*0.1, cy-ry*1.15, cfg.shade);
+  }
+  if(cfg.scar){
+    px(ctx, cx-rx*0.2, cy-ry*0.5, 1, ry*0.9, '#7a5a2e');
+  }
+  if(cfg.spots){
+    px(ctx, cx-rx*0.5, cy-ry*0.35, 1.8,1.8, cfg.shade);
+    px(ctx, cx+rx*0.35, cy+ry*0.15, 1.8,1.8, cfg.shade);
+    px(ctx, cx-rx*0.1, cy+ry*0.55, 1.8,1.8, cfg.shade);
+  }
+
+  // ---- eyes ----
+  const eyeColor = cfg.eyeColor || '#1b1330';
+  const eyeDX = rx*0.32, eyeY = cy-ry*0.18;
+  if(cfg.eye === 'sleepy' || cfg.eye === 'tired'){
+    px(ctx, cx-eyeDX-2, eyeY, 4, 1.4, eyeColor);
+    px(ctx, cx+eyeDX-2, eyeY, 4, 1.4, eyeColor);
+  } else {
+    pxCircle(ctx, cx-eyeDX, eyeY, cfg.gentleEyes?2.6:1.8, eyeColor);
+    pxCircle(ctx, cx+eyeDX, eyeY, cfg.gentleEyes?2.6:1.8, eyeColor);
+    px(ctx, cx-eyeDX-0.6, eyeY-0.6, 1, 1, '#fff');
+    px(ctx, cx+eyeDX-0.6, eyeY-0.6, 1, 1, '#fff');
+    if(cfg.eye === 'angry'){
+      px(ctx, cx-eyeDX-2.2, eyeY-2.4, 4, 1, eyeColor);
+      px(ctx, cx+eyeDX-1.8, eyeY-2.4, 4, 1, eyeColor);
+    }
+  }
+
+  addOutline(ctx, GRID, '#140f22');
+}
+
+/* particle fx spawner used on active holes */
+function spawnParticles(container, kind, count){
+  for(let i=0;i<count;i++){
+    const p = document.createElement('div');
+    p.className = 'fx fx-' + kind;
+    const size = 3 + Math.random()*3;
+    p.style.width = size+'px';
+    p.style.height = size+'px';
+    p.style.left = (30 + Math.random()*40) + '%';
+    p.style.top = (20 + Math.random()*40) + '%';
+    p.style.setProperty('--dx', (Math.random()*20-10)+'px');
+    p.style.animationDelay = (Math.random()*0.3)+'s';
+    container.appendChild(p);
+    setTimeout(()=>p.remove(), 1300);
+  }
+}
+
+/* =========================================================
+   BUD DATA — 16 buds across 6 rarities
+   ========================================================= */
+const BUDS = [
+  // COMMON (5) — easy, slow, generous windows
+  {id:'piggemy', name:'Piggemy', rarity:'common',
+    size:{rx:9,ry:7}, main:'#f4b8c6', shade:'#df8fa2',
+    ear:'round', earColor:'#f4b8c6', snout:true, tail:'curl', eye:'normal', blush:true,
+    desc:"A round little bud that snuffles through fields for sweet roots. Piggemy naps the moment it finds a warm patch of dirt."},
+  {id:'elphant', name:'Elphant', rarity:'common',
+    size:{rx:10,ry:8}, main:'#a3bd9e', shade:'#7f9c7a',
+    ear:'round', earColor:'#8aa885', trunk:true, backPlates:true, tusks:true, eye:'sleepy',
+    desc:"Half elephant, half something much older. Elphant remembers every trail it has ever walked, trunk swaying like a slow metronome."},
+  {id:'litepaw', name:'Litepaw', rarity:'common',
+    size:{rx:8,ry:7}, main:'#f4f6ef', shade:'#c7cbb8',
+    ear:'pointy', earColor:'#f4f6ef', clawGlow:'#8ef0ff', tail:'straight', stripeTail:true, eye:'normal',
+    desc:"Its claws glow just enough to light a path through tall grass. Litepaw is more curious than careful — usually to its own surprise."},
+  {id:'sprigalo', name:'Sprigalo', rarity:'common',
+    size:{rx:7,ry:7}, main:'#8fd97a', shade:'#4f9a4a',
+    ear:'leaf', eye:'normal', flowerBud:true,
+    desc:"Sprouted from a seed something much larger once carried and forgot about. Sprigalo hums quietly whenever the sun comes out."},
+  {id:'dozzle', name:'Dozzle', rarity:'common',
+    size:{rx:8,ry:7}, main:'#a9d8e6', shade:'#5f93a8',
+    ear:'none', shell:true, shellLines:true, eye:'sleepy',
+    desc:"Dozzle moves at exactly one speed: slow. It has never once been in a hurry, and never once regretted it."},
+
+  // UNCOMMON (3) — slightly trickier
+  {id:'bomora', name:'Bomora', rarity:'uncommon',
+    size:{rx:10,ry:8}, main:'#c96a4b', shade:'#7a3a24',
+    ear:'round', earColor:'#9c4c31', horn:true, eye:'angry', noseRing:true,
+    desc:"Bomora treats every rock, tree, and rival bud as a personal challenge. It has never lost a fight, mostly because nothing wants the smoke."},
+  {id:'semette', name:'Semette', rarity:'uncommon',
+    size:{rx:9,ry:9}, main:'#e0c27a', shade:'#8f7333',
+    ear:'floppy', dogTail:true, eye:'normal', collar:true,
+    desc:"Styled like a watcher carved into old temple walls, Semette stands guard over nothing in particular, purely out of habit."},
+  {id:'birbinx', name:'Birbinx', rarity:'uncommon',
+    size:{rx:10,ry:10}, main:'#7a8f5c', shade:'#3f4d29',
+    ear:'round', earColor:'#576b3d', leafy:true, muscly:true, eye:'angry', berries:true,
+    desc:"Wrapped head to toe in living leaves, Birbinx blends perfectly into the forest — right up until it decides not to."},
+
+  // RARE (3) — medium difficulty
+  {id:'fragmenta', name:'Fragmenta', rarity:'rare',
+    size:{rx:9,ry:9}, main:'#5a3b6e', shade:'#241733',
+    ear:'none', darkFire:true, scarf:true, eye:'tired', eyeColor:'#b98af0',
+    desc:"Too tired to cause real trouble, too sharp-edged to approach carelessly. The purple flame around Fragmenta's paw never seems to warm anything."},
+  {id:'porient', name:'Porient', rarity:'rare',
+    size:{rx:10,ry:8}, main:'#5f9bd6', shade:'#254a70',
+    ear:'none', belly:true, finTop:true, gillLines:true, eye:'sleepy',
+    desc:"Porient drifts wherever the current insists, belly first. Convincing it to move anywhere on purpose is nearly impossible."},
+  {id:'cindrake', name:'Cindrake', rarity:'rare',
+    size:{rx:8,ry:7}, main:'#e2703c', shade:'#7a2f0f',
+    ear:'pointy', earColor:'#b8501f', cracks:'#ffcf6b', tailFlame:true, eye:'normal',
+    desc:"Coal-blooded and mischievous, Cindrake's cracked hide glows a little brighter every time it's proud of a prank."},
+
+  // EPIC (2) — harder than medium
+  {id:'pyrowing', name:'Pyrowing', rarity:'epic',
+    size:{rx:9,ry:8}, main:'#d8442c', shade:'#661c0d',
+    ear:'none', wings:'fire', wingVeins:true, eye:'angry',
+    desc:"Its wings never stop smoldering. Pyrowing leaves a thin trail of drifting embers behind it wherever it flies."},
+  {id:'glacewing', name:'Glacewing', rarity:'epic',
+    size:{rx:9,ry:8}, main:'#8fd0ec', shade:'#356a86',
+    ear:'none', wings:'ice', wingVeins:true, eye:'normal',
+    desc:"Glacewing's wingbeats scatter tiny snowflakes that never quite reach the ground before melting away."},
+
+  // LEGENDARY (2) — hard, very short windows
+  {id:'yokoma', name:'Yokoma', rarity:'legendary',
+    size:{rx:8,ry:7}, main:'#e8e8f0', shade:'#8f8fa8',
+    ear:'pointy', earColor:'#3a3a55', blueFlameTail:true, collar:true, eye:'normal',
+    desc:"Small, fluffy, and deceptively calm — right up until the moment it decides it isn't. Legend says something much bigger sleeps just under Yokoma's fur."},
+  {id:'odrigeon', name:'Odrigeon', rarity:'legendary',
+    size:{rx:11,ry:10}, main:'#c9a45a', shade:'#6e551f',
+    ear:'round', earColor:'#a3823f', muscly:true, gentleEyes:true, scar:true, eye:'normal',
+    desc:"Built like something you shouldn't approach, Odrigeon has never once used its strength against anyone. It still watches the horizon, as if waiting for an old friend to come back."},
+
+  // CHROMITE (1) — nearly impossible, tiny window
+  {id:'fytrolon', name:'Fytrolon', rarity:'chromite',
+    size:{rx:10,ry:10}, main:'#f7dd5c', shade:'#8a6f1e',
+    ear:'pointy', earColor:'#c9ac35', muscly:true, crownSpikes:true, eye:'tired', chromiteGlow:true,
+    desc:"Fytrolon and Odrigeon were inseparable once. Then Fytrolon grew stronger than either of them expected, and stopped needing anyone — Odrigeon included. It still appears sometimes, when Odrigeon is near. Just never for long."}
+];
+
+const RARITY = {
+  common:    {color:'var(--common)',    dark:'var(--common-dark)',    weight:46,   stay:1150, dive:300, label:'Common'},
+  uncommon:  {color:'var(--uncommon)',  dark:'var(--uncommon-dark)',  weight:20,   stay:820,  dive:260, label:'Uncommon'},
+  rare:      {color:'var(--rare)',      dark:'var(--rare-dark)',      weight:9,    stay:600,  dive:220, label:'Rare'},
+  epic:      {color:'var(--epic)',      dark:'var(--epic-dark)',      weight:3.4,  stay:420,  dive:190, label:'Epic'},
+  legendary: {color:'var(--legendary)', dark:'var(--legendary-dark)', weight:1.1,  stay:260,  dive:160, label:'Legendary'},
+  chromite:  {color:'var(--chromite)',  dark:'var(--chromite-dark)',  weight:0.06, stay:130,  dive:130, label:'Chromite'}
+};
+
+/* ---------- state ---------- */
+const caught = new Set();
+let odrigeonCaught = false;
+const active = {}; // holeIndex -> {bud, timer}
+let paused = false;
+
+/* ---------- build board + legend ---------- */
+const board = document.getElementById('board');
+const HOLES = 9;
+for(let i=0;i<HOLES;i++){
+  const hole = document.createElement('div');
+  hole.className = 'hole';
+  hole.dataset.index = i;
+  hole.innerHTML = `<div class="sprite-slot" id="slot-${i}"></div>`;
+  hole.addEventListener('click', ()=>onHoleClick(i));
+  board.appendChild(hole);
+}
+
+const legend = document.getElementById('legend');
+Object.entries(RARITY).forEach(([key,r])=>{
+  const s = document.createElement('span');
+  s.innerHTML = `<span class="dot" style="background:${r.color}"></span>${r.label}`;
+  legend.appendChild(s);
+});
+
+function updateHUD(){
+  document.getElementById('caughtCount').textContent = caught.size;
+}
+
+/* ---------- weighted spawn selection ----------
+   NOTE: buds are never removed from the pool once caught — they keep
+   reappearing forever. Catching a bud again just shows a quick toast. */
+function pickBud(){
+  const weights = BUDS.map(b=>{
+    if(b.rarity === 'chromite'){
+      return odrigeonCaught ? 1.4 : RARITY.chromite.weight;
+    }
+    return RARITY[b.rarity].weight / BUDS.filter(x=>x.rarity===b.rarity).length;
+  });
+  const total = weights.reduce((a,b)=>a+b,0);
+  let r = Math.random()*total;
+  for(let i=0;i<BUDS.length;i++){
+    r -= weights[i];
+    if(r<=0) return BUDS[i];
+  }
+  return BUDS[BUDS.length-1];
+}
+
+function freeHoles(){
+  const used = new Set(Object.keys(active).map(Number));
+  const free = [];
+  for(let i=0;i<HOLES;i++) if(!used.has(i)) free.push(i);
+  return free;
+}
+
+/* ---------- spawn loop ---------- */
+function tick(){
+  if(paused) return;
+  if(caught.size >= BUDS.length) return;
+  if(Object.keys(active).length >= 2) return;
+  if(Math.random() > 0.32) return; // spawns are deliberately sparse now
+
+  const free = freeHoles();
+  if(free.length === 0) return;
+  const bud = pickBud();
+  if(!bud) return;
+
+  const holeIndex = free[Math.floor(Math.random()*free.length)];
+  spawnBud(bud, holeIndex);
+}
+setInterval(tick, 950);
+
+function spawnBud(bud, holeIndex){
+  const slot = document.getElementById('slot-'+holeIndex);
+  slot.innerHTML = '';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'sprite-wrap';
+  const scale = bud.rarity === 'chromite' ? 4.4 : 3.6;
+  const canvasSize = Math.round(GRID*scale);
+
+  const canvas = document.createElement('canvas');
+  canvas.className = 'sprite-canvas';
+  canvas.width = GRID; canvas.height = GRID;
+  canvas.style.width = canvasSize+'px';
+  canvas.style.height = canvasSize+'px';
+  wrap.appendChild(canvas);
+
+  const flash = document.createElement('div');
+  flash.className = 'flash';
+  wrap.appendChild(flash);
+
+  slot.appendChild(wrap);
+  drawBud(canvas.getContext('2d'), bud);
+  requestAnimationFrame(()=> wrap.classList.add('up'));
+
+  // idle particle fx depending on bud
+  let fxKind = null;
+  if(bud.wings === 'fire' || bud.blueFlameTail) fxKind = 'fire';
+  if(bud.wings === 'ice') fxKind = 'ice';
+  if(bud.darkFire) fxKind = 'dark';
+  if(bud.chromiteGlow) fxKind = 'gold';
+  let fxInterval = null;
+  if(fxKind){
+    fxInterval = setInterval(()=> spawnParticles(wrap, fxKind, 1), 260);
+  }
+
+  const stay = RARITY[bud.rarity].stay;
+  const timer = setTimeout(()=> despawn(holeIndex, true), stay);
+  active[holeIndex] = {bud, timer, wrap, fxInterval};
+}
+
+function despawn(holeIndex, expired){
+  const entry = active[holeIndex];
+  if(!entry) return;
+  clearTimeout(entry.timer);
+  if(entry.fxInterval) clearInterval(entry.fxInterval);
+  const dive = RARITY[entry.bud.rarity].dive;
+  entry.wrap.style.animationDuration = dive+'ms';
+  entry.wrap.classList.remove('up');
+  entry.wrap.classList.add('down');
+  setTimeout(()=>{
+    const slot = document.getElementById('slot-'+holeIndex);
+    if(slot) slot.innerHTML = '';
+  }, dive+20);
+  delete active[holeIndex];
+}
+
+/* ---------- click / capture ---------- */
+function onHoleClick(holeIndex){
+  const entry = active[holeIndex];
+  if(!entry || paused) return;
+  const bud = entry.bud;
+
+  // throw orb
+  const wrap = entry.wrap;
+  const orb = document.createElement('div');
+  orb.className = 'orb';
+  wrap.appendChild(orb);
+
+  clearTimeout(entry.timer);
+  if(entry.fxInterval) clearInterval(entry.fxInterval);
+  delete active[holeIndex];
+
+  setTimeout(()=>{
+    const flash = wrap.querySelector('.flash');
+    if(flash) flash.classList.add('hit');
+    spawnParticles(wrap, 'gold', 6);
+
+    setTimeout(()=>{
+      const slot = document.getElementById('slot-'+holeIndex);
+      if(slot) slot.innerHTML = '';
+      handleCapture(bud);
+    }, 260);
+  }, 300);
+}
+
+function showToast(msg){
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  requestAnimationFrame(()=> t.classList.add('show'));
+  setTimeout(()=>{
+    t.classList.remove('show');
+    setTimeout(()=> t.remove(), 250);
+  }, 1000);
+}
+
+function handleCapture(bud){
+  const alreadyCaught = caught.has(bud.id);
+
+  if(alreadyCaught){
+    showToast(`You've already caught ${bud.name}`);
+    return;
+  }
+
+  caught.add(bud.id);
+  if(bud.id === 'odrigeon') odrigeonCaught = true;
+  updateHUD();
+
+  if(bud.id === 'yokoma'){
+    playYokomaSequence(()=> showPersona(bud));
+  } else {
+    showPersona(bud);
+  }
+}
+
+/* ---------- Yokoma jumpscare transformation ---------- */
+function playYokomaSequence(done){
+  paused = true;
+  const overlay = document.getElementById('yokomaOverlay');
+  const flash = document.getElementById('yokomaFlash');
+  const big = document.getElementById('yokomaBig');
+  const text = document.getElementById('yokomaText');
+  const canvas = document.getElementById('yokomaCanvas');
+
+  overlay.classList.add('show');
+  flash.classList.add('on');
+
+  // draw a bigger, angrier "true form" using the same generator with tweaks
+  const trueForm = Object.assign({}, BUDS.find(b=>b.id==='yokoma'), {
+    size:{rx:11,ry:10}, muscly:true, eye:'angry'
+  });
+  const ctx = canvas.getContext('2d');
+  canvas.width = GRID; canvas.height = GRID;
+  drawBud(ctx, trueForm);
+
+  setTimeout(()=>{
+    big.classList.add('grow');
+  }, 80);
+
+  setTimeout(()=>{
+    text.classList.add('show');
+  }, 500);
+
+  setTimeout(()=>{
+    big.classList.remove('grow');
+    big.classList.add('shrink');
+    spawnParticles(overlay, 'fire', 10);
+  }, 1500);
+
+  setTimeout(()=>{
+    overlay.classList.remove('show');
+    flash.classList.remove('on');
+    big.classList.remove('shrink');
+    text.classList.remove('show');
+    paused = false;
+    done();
+  }, 2100);
+}
+
+/* ---------- persona capture screen ---------- */
+function showPersona(bud){
+  paused = true;
+  const overlay = document.getElementById('personaOverlay');
+  const canvas = document.getElementById('personaCanvas');
+  canvas.width = GRID; canvas.height = GRID;
+  drawBud(canvas.getContext('2d'), bud);
+
+  document.getElementById('personaName').textContent = bud.name.toUpperCase();
+  document.getElementById('personaTitle').textContent = bud.name;
+  document.getElementById('personaDesc').textContent = bud.desc;
+
+  const r = RARITY[bud.rarity];
+  const pill = document.getElementById('personaRarity');
+  pill.textContent = r.label;
+  pill.style.background = r.color;
+
+  const rightBg = document.getElementById('personaRightBg');
+  rightBg.style.background = `linear-gradient(160deg, ${r.dark}, #0c0c14 85%)`;
+
+  const banner = document.querySelector('.rip-banner');
+  banner.style.background = r.dark;
+
+  overlay.classList.add('show');
+
+  document.getElementById('continueBtn').onclick = ()=>{
+    overlay.classList.remove('show');
+    paused = false;
+    if(caught.size >= BUDS.length){
+      setTimeout(()=> document.getElementById('victoryOverlay').classList.add('show'), 300);
+    }
+  };
+}
+
+updateHUD();
+</script>
+</body>
+</html>
